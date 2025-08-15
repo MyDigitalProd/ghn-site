@@ -1,0 +1,69 @@
+// =========================
+// Imports des partiels SCSS (en premier !!)
+// =========================
+@use './tools/_fonts' as *;
+@use './tools/_variables' as *;
+@use './tools/_mixins' as *;          // AJOUT : animations/utilitaires globaux !
+@use './components/_Header';
+@use './components/_NavBar';
+@use './components/_Exercices';
+@use './components/_Footer';
+
+// =========================
+// Activation de Tailwind CSS v4
+// =========================
+// @import "tailwindcss";
+
+// =========================
+// Styles CSS globaux (reset, bases, layout)
+// =========================
+html, body {
+  margin: 0;
+  padding: 0;
+}
+html { scroll-behavior: smooth; }
+
+body, nav, .navbar, .menu, .logo, ul, li, a, button, input, textarea {
+  font-family: "NunitoVariable", Verdana, Geneva, Tahoma, sans-serif;
+  color: #222;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+h1 {
+  font-family: "Bebas", 'Segoe UI', sans-serif;
+  color: #0a245d;
+  font-size: 2.2rem;
+  margin: 1.5rem 0 1rem;
+}
+h2, h3, h4, h5 {
+  font-family: "RobotCondensed", 'Arial Narrow', sans-serif;
+  color: #0a245d;
+  margin: 1.2rem 0 0.8rem;
+}
+p {
+  font-family: "NunitoVariable", sans-serif;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.logo {
+  font-family: "Bebas", sans-serif;
+  font-weight: bold;
+  font-size: 1.7rem;
+  letter-spacing: 0.03em;
+  color: #1567db;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafd;
+}
+main {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

@@ -1,0 +1,113 @@
+// ==========================
+// MIXINS & ANIMATIONS UTILITAIRES GLOBALES
+// ==========================
+
+// ------------------------------------------
+// Centrage flex (réutilisable partout)
+// ------------------------------------------
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ------------------------------------------
+// Fade-in vers le bas (générique / modales, headers)
+// ------------------------------------------
+@keyframes fadein-down {
+  0%   { opacity: 0; transform: translateY(-24px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@mixin animate-fadein-down($dur: .32s) {
+  animation: fadein-down $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// ------------------------------------------
+// Slide-in depuis la gauche (cards, panneaux)
+// ------------------------------------------
+@keyframes slidein-left {
+  from { opacity: 0; transform: translateX(-36px); }
+  to   { opacity: 1; transform: none; }
+}
+@mixin animate-slidein-left($dur: .36s) {
+  animation: slidein-left $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// ------------------------------------------
+// Menu mobile: entrée/sortie verticale
+// ------------------------------------------
+@keyframes menuEnter {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@mixin animate-menu-enter($dur: .25s) {
+  animation: menuEnter $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+@keyframes menuLeave {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-16px); }
+}
+@mixin animate-menu-leave($dur: .22s) {
+  animation: menuLeave $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// ------------------------------------------
+// Modale/panneau: entrée fluide sans forcer le centrage
+// (pas de translateX(-50%) ici pour éviter tout "saut")
+// ------------------------------------------
+@mixin anim-modal-smooth($dur: .32s) {
+  will-change: transform, opacity;
+  transform: translateY(-12px) scale(0.97);
+  opacity: 0;
+  transition:
+    transform $dur cubic-bezier(.44,.95,.6,1.15),
+    opacity   (.26s) cubic-bezier(.44,.95,.6,1.15);
+
+  &.is-open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+// ------------------------------------------
+// Fade simple (utile pour overlay)
+// ------------------------------------------
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@mixin animate-fade-in($dur: .24s) {
+  animation: fade-in $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// ------------------------------------------
+// Picker/mobile modal: entrée (scale + translateY)
+// ------------------------------------------
+@keyframes pickerIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@mixin animate-picker-in($dur: .33s) {
+  animation: pickerIn $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// ------------------------------------------
+// Vagues SVG
+// ------------------------------------------
+@keyframes waveBase {
+  from { stroke-dashoffset: 64; opacity: .2; }
+  70%  { opacity: 1; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+@mixin wave-animation($dur: .42s) {
+  stroke-dasharray: 64;
+  stroke-dashoffset: 0;
+  opacity: 1;
+  animation: waveBase $dur cubic-bezier(.44,.95,.6,1.15) both;
+}
+
+// Classes utilitaires prêtes à l’emploi (optionnelles)
+.wave-hover-anim   { @include wave-animation(.42s); }
+.wave-mobile-anim  { @include wave-animation(.42s); }
+.wave-active-anim  { @include wave-animation(.52s); }

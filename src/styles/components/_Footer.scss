@@ -1,0 +1,29 @@
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  background-color: darkcyan;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5em 0;
+
+  p {
+    font-size: 0.9em;
+    margin: 0 0.5em;
+    word-break: break-word;
+    display: flex;
+    align-items: center; // ← clé pour tout aligner verticalement
+    gap: 0.3em;          // Optionnel : espace entre texte et icône
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.4em;
+    font-size: 1.2em; // Optionnel, ajuste la taille de l’icône
+    color: inherit;   // hérite de la couleur du parent
+    text-decoration: none;
+    vertical-align: middle;
+  }
+}

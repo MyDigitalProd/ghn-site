@@ -1,0 +1,83 @@
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+
+  // NAV = full width (par défaut)
+  nav.menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;          // Prend toute la largeur
+    max-width: 1280px;    // Limite sur écran large (enlève si tu veux full-bleed)
+    margin: 0 auto;       // Centre le contenu horizontalement
+    padding: 0.5rem 2rem; // Espace intérieur, mobile first
+border-radius: 0% 0% 40% 40% / 50% 50% 40% 40%;
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #0a245d;
+    }
+
+    .burger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #1976d2;
+    }
+
+    ul {
+      display: flex;
+      gap: 1.7rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+
+      li a {
+        color: #0a245d;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      li a:hover {
+        color: #1976d2;
+    
+        transition-duration: 0.2s;
+      }
+    }
+  }
+
+  // Responsive mobile
+  @media (max-width: 800px) {
+    nav.menu {
+      .burger {
+        display: block;
+      }
+      ul {
+        display: none;    // Cacher par défaut en mobile
+        position: absolute;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #fff;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 1rem 2rem;
+        gap: 1.2rem;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.09);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+      &.open ul {
+        display: flex;    // Affiche si menu ouvert
+      }
+    }
+  }
+}
