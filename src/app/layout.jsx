@@ -1,6 +1,5 @@
 import '../styles/tools/_tailwind.css'; // Tailwind v4 d’abord
 import '../styles/globals.scss';        // puis ton SCSS
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import '@/styles/globals.scss'
