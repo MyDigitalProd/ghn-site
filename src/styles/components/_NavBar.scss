@@ -1,218 +1,210 @@
-@use "sass:color"; // Importe les utilitaires de couleur Sass
+@use "sass:color"; // Utilitaires de couleur Sass
+@use "../tools/mixins" as *; // Import des mixins globaux
 
 /* ---------- Variables ---------- */
-$primary-blue: #009ee0;   // Couleur principale (vagues/actifs)
-$secondary-blue: #1567db; // Couleur secondaire (texte)
-$white: #fff;             // Blanc de base
+$primary-blue: #009ee0;
+$secondary-blue: #1567db;
+$white: #fff;
 
 /* ---------- Hauteur nav partagée ---------- */
-:root { --nav-h: 4.5rem; } // Hauteur standard de la barre de nav
+:root { --nav-h: 4.5rem; }
 
 /* ---------- Animations ---------- */
-@keyframes fadeOpacity { from { opacity: 0; } to { opacity: 1; } } // Fade-in générique
-@keyframes waveBase { from { stroke-dashoffset:64; opacity:.2; } 70% { opacity:1; } to { stroke-dashoffset:0; opacity:1; } } // Anim vague
-
-/* ---------- Mixins utilitaires ---------- */
-@mixin flex-center { display:flex; align-items:center; justify-content:center; } // Centrement
-@mixin wave-animation { stroke-dasharray:64; stroke-dashoffset:0; opacity:1; }  // Base de trait vague
+@keyframes fadeOpacity { from { opacity: 0; } to { opacity: 1; } }
+@keyframes waveBase { from { stroke-dashoffset:64; opacity:.2; } 70% { opacity:1; } to { stroke-dashoffset:0; opacity:1; } }
 
 /* ---------- Barre de navigation ---------- */
 .navbar{
-  position: fixed; // Fixe en haut de l’écran
-  inset: 0 0 auto 0; // Top/left/right = 0, bottom auto
-  z-index: 50; // Au-dessus du contenu
-  min-height: var(--nav-h); // Hauteur mini de la barre
-  background: rgba($white,.8); // Fond semi-opaque
-  backdrop-filter: blur(14px); // Flou de fond
-  -webkit-backdrop-filter: blur(14px); // Compatibilité Safari
-  border-bottom: 1px solid rgba($primary-blue,.2); // Ligne séparatrice
-  box-shadow: 0 1px 3px rgba(0,0,0,.1); // Ombre légère
-  transition: background .3s, border-color .3s, box-shadow .3s; // Transitions douces
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  min-height: var(--nav-h);
+  background: rgba($white,.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba($primary-blue,.2);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  transition: background .3s, border-color .3s, box-shadow .3s;
 }
 
 /* ---------- Mobile : bouton centré (fermé) ---------- */
 .picker-mobile-center{
-  position:absolute; // Position absolue par rapport au conteneur nav
-  left:50%; top:50%; transform:translate(-50%,-50%); // Centre exact
-  @include flex-center; // Centre flex
-  flex-direction:column; // Empile le label + vague
-  width:100%; // Prend la largeur dispo
-  min-width:min(150px,40vw); // Limite mini responsive
-  max-width:min(270px,70vw); // Limite max responsive
-  z-index:22; // Devant la nav mais derrière l’overlay (quand ouvert)
+  position:absolute;
+  left:50%; top:50%; transform:translate(-50%,-50%);
+  @include flex-center;
+  flex-direction:column;
+  width:100%;
+  min-width:min(150px,40vw);
+  max-width:min(270px,70vw);
+  z-index:22;
 }
 .picker-closed-button{
-  @include flex-center; // Centre le contenu
-  flex-direction:column; // Empile verticalement
-  background:none; border:none; // Aucun style natif
-  padding:.5rem 1rem .1rem; // Espacement
-  width:100%; // Pleine largeur du cadre
-  cursor:pointer; // Curseur cliquable
-  transition:transform .2s; // Petit feedback
-  -webkit-tap-highlight-color:transparent; // Supprime le flash bleu mobile
-  &:active{ transform:scale(.98); } // Feedback à la pression
+  @include flex-center;
+  flex-direction:column;
+  background:none; border:none;
+  padding:.5rem 1rem .1rem;
+  width:100%;
+  cursor:pointer;
+  transition:transform .2s;
+  -webkit-tap-highlight-color:transparent;
+  &:active{ transform:scale(.98); }
 }
 .picker-active-label{
-  font-family:'NunitoVariable','Quicksand',sans-serif; // Police lisible
-  font-size:clamp(1.1rem,4.7vw,1.22rem); // Taille responsive
-  font-weight:800; // Gras marqué
-  color:$primary-blue; // Couleur principale
-  text-align:center; // Centré
-  user-select:none; // Non sélectionnable
-  margin-bottom:-2px; // Ajuste l’espacement avec la vague
-  line-height:1.2; // Hauteur de ligne compacte
-  transition:color .18s; // Transition couleur douce
-  z-index:2; // Devant la vague
+  font-family:'NunitoVariable','Quicksand',sans-serif;
+  font-size:clamp(1.1rem,4.7vw,1.22rem);
+  font-weight:800;
+  color:$primary-blue;
+  text-align:center;
+  user-select:none;
+  margin-bottom:-2px;
+  line-height:1.2;
+  transition:color .18s;
+  z-index:2;
 }
-.picker-wave{ display:block; width:90px; height:12px; margin:0 auto 4px; pointer-events:none; } // Vague décorative
+.picker-wave{ display:block; width:90px; height:12px; margin:0 auto 4px; pointer-events:none; }
 
 /* ---------- Petite flèche sous la nav (fermé) ---------- */
 .picker-arrow-absolute{
-  position:absolute; // Positionnée par rapport à la nav
-  left:50%; top:calc(100% - 7px); transform:translateX(-50%); // Juste sous la barre
-  @include flex-center; // Centre l’icône
-  width:40px; height:30px; // Taille cliquable
-  background:none; border:none; // Style neutre
-  padding:0; margin:0; // Aucun espace
-  z-index:40; // Au-dessus du header
-  cursor:pointer; // Clique
-  -webkit-tap-highlight-color:transparent; // Pas de flash bleu
-  transition:filter .14s, transform .14s; // Feedback
-  &:hover svg path{ filter:brightness(1.15); } // Légère mise en avant
-  &:active{ filter:brightness(.93); transform:translateX(-50%) scale(.95); } // Press feedback
-  svg{ transition:transform .2s; } // Transition icône
-  &:hover svg{ transform:translateY(2px); } // Petit glissement au survol
+  position:absolute;
+  left:50%; top:calc(100% - 7px); transform:translateX(-50%);
+  @include flex-center;
+  width:40px; height:30px;
+  background:none; border:none;
+  padding:0; margin:0;
+  z-index:40;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:filter .14s, transform .14s;
+  &:hover svg path{ filter:brightness(1.15); }
+  &:active{ filter:brightness(.93); transform:translateX(-50%) scale(.95); }
+  svg{ transition:transform .2s; }
+  &:hover svg{ transform:translateY(2px); }
 }
 
 /* ---------- Overlay (ouvert) ---------- */
 .picker-overlay{
-  position:fixed; inset:0; // Plein écran
-  z-index:999; // Sous la modale mais au-dessus du site
-  background:rgba(0,0,0,.22); // Voile sombre
-  animation:fadeOpacity .22s ease; // Apparition douce
-  overscroll-behavior:contain; // Contient les scrolls élastiques iOS
+  position:fixed; inset:0;
+  z-index:999;
+  background:rgba(0,0,0,.22);
+  animation:fadeOpacity .22s ease;
+  overscroll-behavior:contain;
 }
 
 /* ---------- Modale roulette (ouvert) ---------- */
-/* ⚠️ AUCUNE transform ici pour ne pas casser le positionnement fixed de la flèche du bas */
 .picker-roulette-modal{
-  position:fixed; inset:0; // Plein écran
-  z-index:1000; // Au-dessus de l’overlay
-  display:grid; grid-template-rows: var(--nav-h) 1fr; // Réserve la hauteur de nav visuelle
-  align-items:start; justify-items:center; // Centre horizontalement le contenu
-  background:rgba($white,.96); // Fond quasi-opaque
-  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); // Flou d’arrière-plan
-  padding-top: env(safe-area-inset-top); // Gère encoches haut
-  padding-bottom: env(safe-area-inset-bottom); // Gère encoches bas
-  animation:fadeOpacity .28s cubic-bezier(.44,.95,.6,1.15); // Apparition
-  overscroll-behavior:contain; // Évite l’effet ressort
+  position:fixed; inset:0;
+  z-index:1000;
+  display:grid; grid-template-rows: var(--nav-h) 1fr;
+  align-items:start; justify-items:center;
+  background:rgba($white,.96);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  animation:fadeOpacity .28s cubic-bezier(.44,.95,.6,1.15);
+  overscroll-behavior:contain;
 }
 
 /* ---------- Liste/roulette ---------- */
 .picker-roulette-list{
-  width:min(92vw,420px); // Largeur max lisible
-  max-height:min(70vh, 56px * 5); // Hauteur pour 5 items visibles
-  margin:0; // Reset
-  padding:.6rem 0 72px; // Espace bas pour que l’item central ne soit pas masqué
-  list-style:none; // Pas de puces
-  overflow-y:auto; // Scroll vertical
-
-  scroll-snap-type: y proximity; // Snap doux sur l’axe Y
-  touch-action: pan-y; // Autorise le défilement vertical
-  -webkit-overflow-scrolling: touch; // Inertie iOS
-  scrollbar-gutter: stable; // Évite les sauts à l’apparition de la scrollbar
-
-  scrollbar-width: none; // Cache la scrollbar Firefox
-  &::-webkit-scrollbar{ display:none; } // Cache la scrollbar WebKit
-
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%); // Fondu top/bottom
-  mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%); // Idem non-WebKit
+  width:min(92vw,420px);
+  max-height:min(70vh, 56px * 5);
+  margin:0;
+  padding:.6rem 0 72px;
+  list-style:none;
+  overflow-y:auto;
+  scroll-snap-type: y proximity;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  scrollbar-width: none;
+  &::-webkit-scrollbar{ display:none; }
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
 }
 
 /* ---------- Item ---------- */
 .picker-item{
-  position: relative; // Nécessaire pour placer la vague interne
-  @include flex-center; // Centre le texte
-  text-align:center; // Texte centré
-  user-select:none; // Non sélectionnable
-  cursor:pointer; // Curseur main
-  -webkit-tap-highlight-color:transparent; // Pas de flash bleu
-  font-size:1.13rem; // Taille texte
-  font-weight:600; // Semi-bold
-  color:$secondary-blue; // Couleur texte
-  opacity:.88; // Légère transparence hors actif
-  min-height:54px; // Hauteur confortable
-  padding:.7rem 1rem; // Espacements
-  margin:0; // Pas de marge
-  background:none; border:none; // Style neutre
-  border-radius:12px; // Coins doux
-  scroll-snap-align:center; // Aligne l’item au centre lors du snap
-  transition: transform .12s ease, background .18s ease, color .18s ease, opacity .18s ease, scale .18s ease; // Transitions
-  will-change: transform; // Hint perf
-  scale:.98; // Léger shrink par défaut
-
+  position: relative;
+  @include flex-center;
+  text-align:center;
+  user-select:none;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  font-size:1.13rem;
+  font-weight:600;
+  color:$secondary-blue;
+  opacity:.88;
+  min-height:54px;
+  padding:.7rem 1rem;
+  margin:0;
+  background:none; border:none;
+  border-radius:12px;
+  scroll-snap-align:center;
+  transition: transform .12s ease, background .18s ease, color .18s ease, opacity .18s ease, scale .18s ease;
+  will-change: transform;
+  scale:.98;
   &:active, &:focus{
-    background-color: color.adjust($primary-blue, $lightness: 44%); // Feedback fond
-    color:$primary-blue; // Couleur accent
-    outline:none; // Pas de contour natif
-    transform:scale(.985); // Léger appui
+    background-color: color.adjust($primary-blue, $lightness: 44%);
+    color:$primary-blue;
+    outline:none;
+    transform:scale(.985);
   }
   &.active{
-    color:$primary-blue; // Accent
-    font-weight:800; // Gras
-    opacity:1; // Pleine opacité
-    background:linear-gradient(90deg,#e3f4fb 0%,#fff 100%); // Liseré doux
-    scale:1.06; // Mise en avant
+    color:$primary-blue;
+    font-weight:800;
+    opacity:1;
+    background:linear-gradient(90deg,#e3f4fb 0%,#fff 100%);
+    scale:1.06;
   }
 }
 
 /* ---------- Vague interne de l’item actif ---------- */
 .picker-wave-inside{
-  position:absolute; // Positionnée dans l’item
-  left:50%; bottom:6px; transform:translateX(-50%); // Centrée en bas
-  width:76px; height:10px; // Taille
-  z-index:1; // Derrière le texte
-  pointer-events:none; // Non cliquable
+  position:absolute;
+  left:50%; bottom:6px; transform:translateX(-50%);
+  width:76px; height:10px;
+  z-index:1;
+  pointer-events:none;
 }
 
-/* ---------- Flèche du bas (OUVERT) : HORS overlay/modale, FIXE au viewport ---------- */
+/* ---------- Flèche du bas (OUVERT) ---------- */
 .picker-arrow-bottom{
-  position: fixed; // Toujours par rapport au viewport
-  left: 50%; bottom: calc(env(safe-area-inset-bottom) + 12px); transform: translateX(-50%); // Centrée en bas
-  z-index: 1002; // Au-dessus de l’overlay (999) et de la modale (1000)
-  background:none; border:none; // Style neutre
-  cursor:pointer; // Clique
-  @include flex-center; // Centre l’icône
-  margin:0; padding:.6rem; // Espace cliquable
-  border-radius:50%; // Forme ronde
-  box-shadow:0 1.5px 10px rgba($primary-blue,.09); // Ombre légère
-  transition: background .15s, transform .16s cubic-bezier(.44,.95,.6,1.15); // Feedback
-  pointer-events:auto; // S’assure d’être cliquable même au-dessus de l’overlay
-  &:hover{ background: color.adjust($primary-blue, $lightness: 47%); } // Hover doux
-  &:active{ transform: translateX(-50%) scale(.91); } // Press feedback
+  position: fixed;
+  left: 50%; bottom: calc(env(safe-area-inset-bottom) + 12px); transform: translateX(-50%);
+  z-index: 1002;
+  background:none; border:none;
+  cursor:pointer;
+  @include flex-center;
+  margin:0; padding:.6rem;
+  border-radius:50%;
+  box-shadow:0 1.5px 10px rgba($primary-blue,.09);
+  transition: background .15s, transform .16s cubic-bezier(.44,.95,.6,1.15);
+  pointer-events:auto;
+  &:hover{ background: color.adjust($primary-blue, $lightness: 47%); }
+  &:active{ transform: translateX(-50%) scale(.91); }
 }
 
 /* ---------- Animations de vagues ---------- */
-.wave-hover-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; } // Survol
-.wave-mobile-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; } // Mobile générique
-.wave-active-anim{ @include wave-animation; animation:waveBase .52s cubic-bezier(.44,.95,.6,1.15) both; } // Actif plus long
+.wave-hover-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; }
+.wave-mobile-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; }
+.wave-active-anim{ @include wave-animation; animation:waveBase .52s cubic-bezier(.44,.95,.6,1.15) both; }
 
-/* ---------- Accessibilité : réduit les animations ---------- */
+/* ---------- Accessibilité ---------- */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
-    animation-duration:.001ms !important; // Couper les anims
-    animation-iteration-count:1 !important; // Une seule itération
-    transition-duration:.001ms !important; // Couper les transitions
-    scroll-behavior:auto !important; // Pas de scroll smooth
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
   }
 }
 
-/* ---------- Casse desktop : on masque le picker mobile ---------- */
+/* ---------- Desktop ---------- */
 @media (min-width:1024px){
-  .picker-mobile-center,   // Bouton centré mobile
-  .picker-roulette-modal,  // Modale mobile
-  .picker-overlay,         // Overlay mobile
-  .picker-arrow-absolute{  // Petite flèche sous la nav (fermé)
-    display:none !important; // Cachés en desktop
+  .picker-mobile-center,
+  .picker-roulette-modal,
+  .picker-overlay,
+  .picker-arrow-absolute{
+    display:none !important;
   }
 }
