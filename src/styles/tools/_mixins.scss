@@ -106,8 +106,3 @@
   opacity: 1;
   animation: waveBase $dur cubic-bezier(.44,.95,.6,1.15) both;
 }
-
-// Classes utilitaires prêtes à l’emploi (optionnelles)
-.wave-hover-anim   { @include wave-animation(.42s); }
-.wave-mobile-anim  { @include wave-animation(.42s); }
-.wave-active-anim  { @include wave-animation(.52s); }

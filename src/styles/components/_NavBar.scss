@@ -1,4 +1,5 @@
 @use "sass:color"; // Importe les utilitaires de couleur Sass
+@use '../tools/_mixins' as m;
 
 /* ---------- Variables ---------- */
 $primary-blue: #009ee0;   // Couleur principale (vagues/actifs)
@@ -11,10 +12,6 @@ $white: #fff;             // Blanc de base
 /* ---------- Animations ---------- */
 @keyframes fadeOpacity { from { opacity: 0; } to { opacity: 1; } } // Fade-in générique
 @keyframes waveBase { from { stroke-dashoffset:64; opacity:.2; } 70% { opacity:1; } to { stroke-dashoffset:0; opacity:1; } } // Anim vague
-
-/* ---------- Mixins utilitaires ---------- */
-@mixin flex-center { display:flex; align-items:center; justify-content:center; } // Centrement
-@mixin wave-animation { stroke-dasharray:64; stroke-dashoffset:0; opacity:1; }  // Base de trait vague
 
 /* ---------- Barre de navigation ---------- */
 .navbar{
@@ -34,7 +31,7 @@ $white: #fff;             // Blanc de base
 .picker-mobile-center{
   position:absolute; // Position absolue par rapport au conteneur nav
   left:50%; top:50%; transform:translate(-50%,-50%); // Centre exact
-  @include flex-center; // Centre flex
+  @include m.flex-center; // Centre flex
   flex-direction:column; // Empile le label + vague
   width:100%; // Prend la largeur dispo
   min-width:min(150px,40vw); // Limite mini responsive
@@ -42,7 +39,7 @@ $white: #fff;             // Blanc de base
   z-index:22; // Devant la nav mais derrière l’overlay (quand ouvert)
 }
 .picker-closed-button{
-  @include flex-center; // Centre le contenu
+  @include m.flex-center; // Centre le contenu
   flex-direction:column; // Empile verticalement
   background:none; border:none; // Aucun style natif
   padding:.5rem 1rem .1rem; // Espacement
@@ -70,7 +67,7 @@ $white: #fff;             // Blanc de base
 .picker-arrow-absolute{
   position:absolute; // Positionnée par rapport à la nav
   left:50%; top:calc(100% - 7px); transform:translateX(-50%); // Juste sous la barre
-  @include flex-center; // Centre l’icône
+  @include m.flex-center; // Centre l’icône
   width:40px; height:30px; // Taille cliquable
   background:none; border:none; // Style neutre
   padding:0; margin:0; // Aucun espace
@@ -132,7 +129,7 @@ $white: #fff;             // Blanc de base
 /* ---------- Item ---------- */
 .picker-item{
   position: relative; // Nécessaire pour placer la vague interne
-  @include flex-center; // Centre le texte
+  @include m.flex-center; // Centre le texte
   text-align:center; // Texte centré
   user-select:none; // Non sélectionnable
   cursor:pointer; // Curseur main
@@ -182,7 +179,7 @@ $white: #fff;             // Blanc de base
   z-index: 1002; // Au-dessus de l’overlay (999) et de la modale (1000)
   background:none; border:none; // Style neutre
   cursor:pointer; // Clique
-  @include flex-center; // Centre l’icône
+  @include m.flex-center; // Centre l’icône
   margin:0; padding:.6rem; // Espace cliquable
   border-radius:50%; // Forme ronde
   box-shadow:0 1.5px 10px rgba($primary-blue,.09); // Ombre légère
@@ -193,9 +190,9 @@ $white: #fff;             // Blanc de base
 }
 
 /* ---------- Animations de vagues ---------- */
-.wave-hover-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; } // Survol
-.wave-mobile-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; } // Mobile générique
-.wave-active-anim{ @include wave-animation; animation:waveBase .52s cubic-bezier(.44,.95,.6,1.15) both; } // Actif plus long
+.wave-hover-anim{ @include m.wave-animation; } // Survol
+.wave-mobile-anim{ @include m.wave-animation; } // Mobile générique
+.wave-active-anim{ @include m.wave-animation(.52s); } // Actif plus long
 
 /* ---------- Accessibilité : réduit les animations ---------- */
 @media (prefers-reduced-motion: reduce){
