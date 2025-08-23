@@ -7,14 +7,11 @@ export default function Footer() {
     <footer>
       {/* Bloc 1 : Copyright avec l'année en cours */}
       <p>© 2021–{new Date().getFullYear()}</p>
-      
       {/* Bloc 2 : Nom du site */}
       <p>GHN-Pool.</p>
-      
       {/* Bloc 3 : Crédit développement + lien Instagram */}
       <p>
         Développement : MyDigitalProd.
-        {/* Lien Instagram, ouverture dans un nouvel onglet, sécurisé */}
         <a
           href="https://www.instagram.com/"
           target="_blank"

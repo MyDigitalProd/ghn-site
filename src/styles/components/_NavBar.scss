@@ -1,5 +1,4 @@
-@use "sass:color"; // Utilitaires de couleur Sass
-@use "../tools/mixins" as *; // Import des mixins globaux
+@use "sass:color";
 
 /* ---------- Variables ---------- */
 $primary-blue: #009ee0;
@@ -10,8 +9,12 @@ $white: #fff;
 :root { --nav-h: 4.5rem; }
 
 /* ---------- Animations ---------- */
-@keyframes fadeOpacity { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOpacity { from { opacity:0; } to { opacity:1; } }
 @keyframes waveBase { from { stroke-dashoffset:64; opacity:.2; } 70% { opacity:1; } to { stroke-dashoffset:0; opacity:1; } }
+
+/* ---------- Helpers ---------- */
+@mixin flex-center { display:flex; align-items:center; justify-content:center; }
+@mixin wave-animation { stroke-dasharray:64; stroke-dashoffset:0; opacity:1; }
 
 /* ---------- Barre de navigation ---------- */
 .navbar{
@@ -25,6 +28,9 @@ $white: #fff;
   border-bottom: 1px solid rgba($primary-blue,.2);
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
   transition: background .3s, border-color .3s, box-shadow .3s;
+  overflow-x: hidden; /* empêche tout débordement horizontal */
+  width: 100%;       /* pas de 100vw -> évite le scroll latéral sur mobile */
+  box-sizing: border-box;
 }
 
 /* ---------- Mobile : bouton centré (fermé) ---------- */
@@ -112,12 +118,17 @@ $white: #fff;
   padding:.6rem 0 72px;
   list-style:none;
   overflow-y:auto;
+
   scroll-snap-type: y proximity;
   touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable;
+
+  /* cache les barres de scroll */
   scrollbar-width: none;
   &::-webkit-scrollbar{ display:none; }
+
+  /* fondu haut/bas */
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, black 12%, black 88%, transparent 100%);
 }
@@ -143,6 +154,7 @@ $white: #fff;
   transition: transform .12s ease, background .18s ease, color .18s ease, opacity .18s ease, scale .18s ease;
   will-change: transform;
   scale:.98;
+
   &:active, &:focus{
     background-color: color.adjust($primary-blue, $lightness: 44%);
     color:$primary-blue;
@@ -158,7 +170,7 @@ $white: #fff;
   }
 }
 
-/* ---------- Vague interne de l’item actif ---------- */
+/* ---------- Vague interne item actif (mobile) ---------- */
 .picker-wave-inside{
   position:absolute;
   left:50%; bottom:6px; transform:translateX(-50%);
@@ -167,7 +179,7 @@ $white: #fff;
   pointer-events:none;
 }
 
-/* ---------- Flèche du bas (OUVERT) ---------- */
+/* ---------- Flèche du bas (ouvert) ---------- */
 .picker-arrow-bottom{
   position: fixed;
   left: 50%; bottom: calc(env(safe-area-inset-bottom) + 12px); transform: translateX(-50%);
@@ -184,10 +196,76 @@ $white: #fff;
   &:active{ transform: translateX(-50%) scale(.91); }
 }
 
-/* ---------- Animations de vagues ---------- */
+/* ---------- Helpers d’animation (mobile) ---------- */
 .wave-hover-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; }
 .wave-mobile-anim{ @include wave-animation; animation:waveBase .42s cubic-bezier(.44,.95,.6,1.15) both; }
 .wave-active-anim{ @include wave-animation; animation:waveBase .52s cubic-bezier(.44,.95,.6,1.15) both; }
+
+/* ========== Vagues sous les liens de la NAVBAR (desktop) ========== */
+/* Ajoute .nav-link sur <a> et ce bloc sous le texte :
+   <span class="nav-wave">
+     <svg class="nav-wave__svg" viewBox="0 0 64 8" fill="none">
+       <path class="nav-wave__path" d="M0 4 Q 16 8 32 4 Q 48 0 64 4" />
+     </svg>
+   </span>
+*/
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding-bottom: 6px;       /* réserve l’espace de la vague */
+  line-height: 1.2;
+}
+
+.nav-link .nav-wave {
+  position: absolute;
+  left: 50%;
+  bottom: -14px; /* bien sous le texte */
+  width: 80px;
+  height: 8px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-link .nav-wave__svg {
+  display: block;
+  width: 80px;
+  height: 8px;
+}
+
+.nav-link .nav-wave__path {
+  opacity: 0;
+  stroke: transparent;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 64;
+  stroke-dashoffset: 64;
+  transition: opacity .3s ease;
+}
+
+/* au survol -> vague claire */
+.nav-link--hover .nav-wave__path {
+  opacity: 1;
+  stroke: #b6ecfe;
+  animation: navWaveDraw .42s cubic-bezier(.44,.95,.6,1.15) forwards;
+}
+
+/* actif -> vague bleue */
+.nav-link--active .nav-wave__path {
+  opacity: 1;
+  stroke: #009ee0;
+  animation: navWaveDraw .52s cubic-bezier(.44,.95,.6,1.15) forwards;
+}
+
+@keyframes navWaveDraw {
+  from { stroke-dashoffset: 64; opacity: .2; }
+  70%  { opacity: 1; }
+  to   { stroke-dashoffset: 0;  opacity: 1; }
+}
 
 /* ---------- Accessibilité ---------- */
 @media (prefers-reduced-motion: reduce){
@@ -199,7 +277,7 @@ $white: #fff;
   }
 }
 
-/* ---------- Desktop ---------- */
+/* ---------- Desktop : on masque la version mobile ---------- */
 @media (min-width:1024px){
   .picker-mobile-center,
   .picker-roulette-modal,

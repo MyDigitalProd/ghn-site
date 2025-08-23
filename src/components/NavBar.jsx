@@ -33,27 +33,51 @@ export default function NavBar() {
   const ITEMS_COUNT = SECTION_IDS.length;
   const LOOPED_LIST = [...SECTION_IDS, ...SECTION_IDS, ...SECTION_IDS];
 
-  /* -------- Scrollspy (rAF) -------- */
+  /* -------- Scrollspy fiable (rAF + debounce, sans dépendance à activeId) -------- */
   useEffect(() => {
+    let debounceId;
+    let rafId;
     const onScroll = () => {
       if (scrollSpyTicking.current) return;
       scrollSpyTicking.current = true;
-      requestAnimationFrame(() => {
-        let found = "accueil";
-        for (const id of SECTION_IDS) {
-          const el = document.getElementById(id);
-          if (!el) continue;
-          const r = el.getBoundingClientRect();
-          if (r.top <= 64 && r.bottom > 64) { found = id; break; }
-        }
-        setActiveId(found);
-        setIndex(SECTION_IDS.indexOf(found));
-        scrollSpyTicking.current = false;
-      });
+
+      clearTimeout(debounceId);
+      debounceId = setTimeout(() => {
+        rafId = requestAnimationFrame(() => {
+          const viewportMiddle = window.innerHeight / 2;
+          const navH = 72; // ~4.5rem
+
+          let bestId = "accueil";
+          let bestDist = Infinity;
+
+          for (const id of SECTION_IDS) {
+            const el = document.getElementById(id);
+            if (!el) continue;
+            const r = el.getBoundingClientRect();
+
+            // Ignore sections totalement hors zone utile
+            if (r.bottom <= navH || r.top >= window.innerHeight * 0.92) continue;
+
+            const mid = (r.top + r.bottom) / 2;
+            const dist = Math.abs(mid - viewportMiddle);
+            if (dist < bestDist) { bestDist = dist; bestId = id; }
+          }
+
+          setActiveId(bestId);
+          setIndex(SECTION_IDS.indexOf(bestId));
+
+          scrollSpyTicking.current = false;
+        });
+      }, 120);
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(debounceId);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   /* Vague visible uniquement hors scroll */
@@ -78,15 +102,28 @@ export default function NavBar() {
     return () => { document.body.style.overflow = prev; };
   }, [pickerOpen]);
 
-  /* Sélection logique */
+  /* Sélection logique avec transition douce */
   const selectIndex = useCallback((idx) => {
+    // Immediate UI feedback
     setIndex(idx);
-    setActiveId(SECTION_IDS[idx]);
-    setOpen(false);
-    const el = document.getElementById(SECTION_IDS[idx]);
+    const targetId = SECTION_IDS[idx];
+    
+    // Pause animation pendant la transition
+    setWave(false);
+    
+    // Update active après un délai pour smooth transition
+    setTimeout(() => {
+      setActiveId(targetId);
+      setOpen(false);
+    }, 100);
+    
+    const el = document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => el.setAttribute("tabindex", "-1"), 100);
+      setTimeout(() => {
+        el.setAttribute("tabindex", "-1");
+        setWave(true); // Reactive animation
+      }, 300);
     }
   }, []);
   const handleClickLooped = useCallback((loopedIdx) => {
@@ -184,228 +221,99 @@ export default function NavBar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [pickerOpen]);
 
-  /* UI (fermé) */
-  const renderPickerClosed = () => (
-    <div className="picker-mobile-center">
-      <button
-        type="button"
-        className="picker-closed-button"
-        onClick={() => setOpen(true)}
-        aria-label="Ouvrir le menu"
-        aria-haspopup="true"
-        aria-expanded={pickerOpen}
-      >
-        <span className="picker-active-label">{LABELS[activeId]}</span>
-        {waveVisible && (
-          <span className="picker-wave" aria-hidden="true">
-            <svg viewBox="0 0 64 8" fill="none" className="w-full h-full">
-              <path
-                d="M0 4 Q 16 8 32 4 Q 48 0 64 4"
-                fill="none"
-                stroke="#009ee0"
-                strokeWidth={4}
-                className="wave-active-anim"
-                style={{ strokeDasharray: 64, strokeDashoffset: 0, opacity: 1 }}
-              />
-            </svg>
-          </span>
-        )}
-      </button>
-    </div>
-  );
+  // Désactivation du picker mobile : ne rien rendre sur mobile
+  const renderPickerClosed = () => null;
 
-  /* Petite flèche sous la nav (fermé) */
-  const renderMobileArrowHeader = () => (
-    <button
-      type="button"
-      className="picker-arrow-absolute"
-      onClick={() => setOpen(true)}
-      aria-label="Ouvrir le menu"
-      tabIndex={0}
-      style={{ display: pickerOpen ? "none" : "flex" }}
-    >
-      <svg width="31" height="19" viewBox="0 0 28 17" fill="none" aria-hidden="true">
-        <path d="M4 6L14 13L24 6" stroke="#009ee0" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
-      </svg>
-    </button>
-  );
+  // Désactivation de la flèche mobile
+  const renderMobileArrowHeader = () => null;
 
-  /* Overlay + Sheet (Framer Motion) + flèche du bas FIXE */
-  const renderPickerOpen = () => {
-    const activeLoopedIdx = ITEMS_COUNT + pickerIndex;
-    const activeOptionId  = `${SECTION_IDS[pickerIndex]}-${activeLoopedIdx}`;
-
-    return (
-      <AnimatePresence>
-        {/* Overlay */}
-        <motion.div
-          key="overlay"
-          className="picker-overlay"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.18 }}
-          onMouseDown={() => (overlayClickRef.current = true)}
-          onMouseUp={() => (overlayClickRef.current = false)}
-          onClick={() => !overlayClickRef.current && setOpen(false)}
-        />
-
-        {/* Sheet plein écran (sans transform parent) */}
-        <motion.div
-          key="sheet"
-          className="picker-roulette-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menu des sections"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.22, ease: [0.44, 0.95, 0.6, 1.15] }}
-        >
-          <ul
-            ref={pickerRef}
-            className="picker-roulette-list"
-            onScroll={updateActiveFromCenter}
-            onTouchStart={onOpenTouchStart}
-            onTouchMove={onOpenTouchMove}
-            onTouchEnd={onOpenTouchEnd}
-            role="listbox"
-            aria-activedescendant={activeOptionId}
-          >
-            {LOOPED_LIST.map((id, i) => {
-              const isActive =
-                mod(i, ITEMS_COUNT) === pickerIndex && i >= ITEMS_COUNT && i < 2 * ITEMS_COUNT;
-              return (
-                <li
-                  id={`${id}-${i}`}
-                  key={i + id}
-                  className={`picker-item${isActive ? " active" : ""}`}
-                  onClick={() => handleClickLooped(i)}
-                  aria-selected={isActive}
-                  role="option"
-                >
-                  {LABELS[id]}
-                  {isActive && waveVisible && (
-                    <span className="picker-wave picker-wave-inside" aria-hidden="true">
-                      <svg viewBox="0 0 64 8" fill="none" className="w-full h-full">
-                        <path
-                          d="M0 4 Q 16 8 32 4 Q 48 0 64 4"
-                          fill="none"
-                          stroke="#009ee0"
-                          strokeWidth={4}
-                          className="wave-active-anim"
-                          style={{ strokeDasharray: 64, strokeDashoffset: 0, opacity: 1 }}
-                        />
-                      </svg>
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </motion.div>
-
-        {/* Flèche du bas FIXE (fermeture) */}
-        <motion.button
-          key="close-arrow"
-          type="button"
-          className="picker-arrow-bottom"
-          onClick={() => setOpen(false)}
-          aria-label="Fermer le menu"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 12 }}
-          transition={{ duration: 0.18 }}
-        >
-          <svg width="32" height="16" viewBox="0 0 28 17" fill="none" aria-hidden="true">
-            <path d="M4 11L14 4L24 11" stroke="#009ee0" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </motion.button>
-      </AnimatePresence>
-    );
-  };
+  // Désactivation du menu mobile ouvert
+  const renderPickerOpen = () => null;
 
   /* Render */
   return (
     <nav
-      className="navbar fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-lg shadow-md border-b border-[#009ee0]/20 transition-all duration-300"
-      style={{ WebkitBackdropFilter: "blur(14px)", minHeight: "4.5rem" }}
+      className="navbar fixed top-0 left-0 w-full z-50 bg-transparent border-0 shadow-none transition-all duration-300"
+      style={{ background: "transparent", minHeight: "4.5rem" }}
       aria-label="Menu principal"
     >
+      {/*
+        RÉGLAGES FOND NAVBAR (dégradé blanc -> transparent)
+        - height: ajuste la hauteur couverte par le dégradé (ex: '6rem', '8rem').
+        - background: linear-gradient avec plusieurs stops (opacités à modifier pour plus/moins de blanc).
+          • 0%   = opacité en haut (plus proche du logo)
+          • 40-60% = opacité intermédiaire (milieu de la navbar)
+          • 80% = opacité résiduelle (quasi fondu)
+          • 100% = totalement transparent (aucun effet)
+        Astuce: baisse les valeurs (0.92 -> 0.88 / 0.7 -> 0.6) pour mieux voir les vagues; augmente-les pour plus de lisibilité.
+        Remarque: pointer-events: none garde la navbar cliquable.
+      */}
       <div
-        className="max-w-7xl mx-auto flex items-center justify-between px-3 md:px-6 py-2 relative"
-        onTouchStart={!pickerOpen ? onClosedTouchStart : undefined}
-        onTouchMove={!pickerOpen ? onClosedTouchMove : undefined}
+        className="absolute left-0 right-0 top-0 pointer-events-none"
+        aria-hidden="true"
+        style={{
+      height: '7rem',
+      background: 'linear-gradient(to bottom, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.90) 35%, rgba(255,255,255,0.12) 55%, rgba(255,255,255,0) 100%)'
+        }}
+      />
+      <div
+        className="max-w-7xl mx-auto flex items-center justify-between px-2 md:px-4 py-2 relative z-10 overflow-hidden"
+        style={{ maxWidth: '100vw', boxSizing: 'border-box' }}
       >
         {/* Logo */}
         <a
           href="#accueil"
-          className="text-2xl md:text-3xl font-extrabold text-[#009ee0] font-bebas select-none whitespace-nowrap"
+          className="relative z-10 text-2xl md:text-3xl font-extrabold text-[#009ee0] font-bebas select-none whitespace-nowrap"
           onClick={(e) => { e.preventDefault(); selectIndex(Math.max(0, SECTION_IDS.indexOf("accueil"))); }}
         >
           GHN-Pool
         </a>
 
-        {/* Titre + vague (fermé) */}
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:hidden flex flex-col items-center w-full pointer-events-auto"
-          style={{ minWidth: "min(150px, 40vw)", maxWidth: "min(270px, 70vw)" }}
-        >
-          {!pickerOpen && renderPickerClosed()}
-        </div>
-
-        {/* Placeholder droite */}
-        <div style={{ width: 44, height: 44 }} className="lg:hidden" aria-hidden="true" />
-
         {/* Desktop menu */}
-        <div className="hidden lg:flex flex-1 justify-center">
-          <ul className="flex gap-4 lg:gap-7 items-center font-nunito font-bold text-[#1567db]">
+        <div className="relative z-10 hidden lg:flex flex-1 justify-center max-w-0 lg:max-w-none overflow-hidden">
+          <ul className="flex gap-2 lg:gap-5 xl:gap-7 items-center font-nunito font-bold text-[#1567db] flex-wrap justify-center">
             {SECTION_IDS.map((item) => {
               const isActive = activeId === item;
               const isHovered = hovered === item;
               return (
                 <li
                   key={item}
-                  className="relative flex flex-col items-center"
+                  className={`relative flex flex-col items-center nav-link ${isActive ? 'nav-link--active' : ''} ${isHovered ? 'nav-link--hover' : ''}`}
                   onMouseEnter={() => setHovered(item)}
                   onMouseLeave={() => setHovered("")}
                 >
                   <a
                     href={`#${item}`}
-                    className={`px-3 py-1.5 rounded-md z-10 transition-colors duration-200 ${
+                    className={`px-2 lg:px-3 py-1.5 rounded-md z-10 transition-colors duration-200 text-sm lg:text-base whitespace-nowrap ${
                       isActive ? "text-[#009ee0]" : "text-[#1567db]"
                     } hover:text-[#009ee0] focus:text-[#009ee0] outline-none focus-visible:ring-2 focus-visible:ring-[#009ee0]/50`}
-                    onClick={(e) => { e.preventDefault(); selectIndex(SECTION_IDS.indexOf(item)); }}
+                    onClick={(e) => { e.preventDefault(); setHovered(""); selectIndex(SECTION_IDS.indexOf(item)); }}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {LABELS[item]}
                   </a>
-                  <span className="absolute bottom-0 left-0 w-full h-2 pointer-events-none overflow-hidden">
-                    <svg viewBox="0 0 64 8" fill="none" className="w-full h-full">
+                  <div 
+                    className="nav-wave"
+                    style={{ width: '80px', height: '8px', left: '50%', transform: 'translateX(-50%)', position: 'absolute', pointerEvents: 'none', zIndex: 1 }}
+                  >
+                    <svg 
+                      className="nav-wave__svg" 
+                      width="80" height="8" viewBox="0 0 64 8" fill="none"
+                      style={{ width: '80px', height: '8px', display: 'block' }}
+                    >
                       <path
+                        className="nav-wave__path"
                         d="M0 4 Q 16 8 32 4 Q 48 0 64 4"
                         fill="none"
-                        stroke={isActive ? "#009ee0" : isHovered ? "#b6ecfe" : "transparent"}
-                        strokeWidth={4}
-                        className={isActive ? "wave-active-anim" : isHovered ? "wave-hover-anim" : ""}
-                        style={{ strokeDasharray: 64, strokeDashoffset: 0, opacity: isActive || isHovered ? 1 : 0, transition: "opacity 0.19s, stroke 0.19s" }}
                       />
                     </svg>
-                  </span>
+                  </div>
                 </li>
               );
             })}
           </ul>
         </div>
-
-        {/* Flèche sous la nav (fermé) */}
-        <div className="lg:hidden">
-          {!pickerOpen && renderMobileArrowHeader()}
-        </div>
       </div>
-
-      {/* Overlay + Sheet + Flèche du bas */}
-      {pickerOpen && renderPickerOpen()}
     </nav>
   );
 }

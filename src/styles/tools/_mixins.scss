@@ -96,8 +96,8 @@
 // Vagues SVG
 // ------------------------------------------
 @keyframes waveBase {
-  from { stroke-dashoffset: 64; opacity: .2; }
-  70%  { opacity: 1; }
+  from { stroke-dashoffset: 64; opacity: .45; }
+  70%  { opacity: .95; }
   to   { stroke-dashoffset: 0; opacity: 1; }
 }
 @mixin wave-animation($dur: .42s) {
@@ -111,3 +111,9 @@
 .wave-hover-anim   { @include wave-animation(.42s); }
 .wave-mobile-anim  { @include wave-animation(.42s); }
 .wave-active-anim  { @include wave-animation(.52s); }
+.wave-sync-anim {
+  @include wave-animation(2.2s);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  overflow: hidden; /* Empêche le débordement de l'animation */
+}
