@@ -13,6 +13,7 @@ const MobileNavBar = dynamic(() => import("../components/MobileNavBar"), { ssr: 
 const WhatsAppBubble = dynamic(() => import("../components/WhatsAppBubble"), { ssr: false });
 const InteractiveContact = dynamic(() => import("../components/InteractiveContact"), { ssr: false });
 import InfoModal from "@/components/InfoModal";
+const RealisationsCarousel = dynamic(() => import("../components/RealisationsCarousel"), { ssr: false });
 
 // ----- Page one-page GHN -----
 export default function Page() {
@@ -213,6 +214,23 @@ export default function Page() {
 
           <div className="relative z-10 w-full" data-reveal>
             <ModernTerrassesSection />
+          </div>
+        </section>
+
+        {/* ====== NOS RÉALISATIONS ====== */}
+        <section
+          id="nos-realisations"
+          className="min-h-screen flex items-center px-4 py-16 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+        >
+          {/* Vague décor en haut de section (harmonisée) */}
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+          </div>
+
+          <div className="relative z-10 max-w-5xl mx-auto w-full" data-reveal>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
+            <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
+            <RealisationsCarousel />
           </div>
         </section>
 

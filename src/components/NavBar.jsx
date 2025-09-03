@@ -5,12 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 /* Sections & labels */
 const SECTION_IDS = [
   "accueil","construction","renovation","depannage",
-  "hivernage","entretien","terrasses","contact",
+  "hivernage","entretien","terrasses","nos-realisations","contact",
 ];
 const LABELS = {
   accueil:"Accueil", construction:"Construction", renovation:"Rénovation",
   depannage:"Dépannage", hivernage:"Hivernage", entretien:"Entretien",
-  terrasses:"Terrasses", contact:"Contact"
+  terrasses:"Terrasses", "nos-realisations":"Nos Réalisations", contact:"Contact"
 };
 const mod = (n, m) => ((n % m) + m) % m;
 
