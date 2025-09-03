@@ -8,12 +8,14 @@ import {
   FaFlask, FaUmbrella, FaPlay, FaBroom, FaClipboardCheck, FaClone, FaRuler
 } from "react-icons/fa"; // Icônes
 import WaveBackground from "../components/WaveBackground"; // Vague décorative
+import PS3WaveEffect from "../components/PS3WaveEffect"; // Effet vagues PlayStation 3
 import dynamic from "next/dynamic";
 const MobileNavBar = dynamic(() => import("../components/MobileNavBar"), { ssr: false });
 const WhatsAppBubble = dynamic(() => import("../components/WhatsAppBubble"), { ssr: false });
 const InteractiveContact = dynamic(() => import("../components/InteractiveContact"), { ssr: false });
 import InfoModal from "@/components/InfoModal";
 const RealisationsCarousel = dynamic(() => import("../components/RealisationsCarousel"), { ssr: false });
+const RealisticWaveEffect = dynamic(() => import("../components/RealisticWaveEffect"), { ssr: false });
 
 // ----- Page one-page GHN -----
 export default function Page() {
@@ -74,7 +76,7 @@ export default function Page() {
           id="accueil"
           className="min-h-screen flex items-center px-4 mt-10 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
@@ -98,7 +100,16 @@ export default function Page() {
                 fill="url(#accueilTopWaveGrad)"
               />
             </svg>
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2" data-reveal>
@@ -132,9 +143,40 @@ export default function Page() {
           id="construction"
           className="min-h-screen flex items-center px-4  bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="constructionTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#constructionTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>                 {/* Bloc révélé */}
@@ -147,9 +189,40 @@ export default function Page() {
           id="renovation"
           className="min-h-screen flex items-center px-4  bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="renovationTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#renovationTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>
@@ -162,9 +235,40 @@ export default function Page() {
           id="depannage"
           className="min-h-screen flex items-center px-4 py-20 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="depannageTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#depannageTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>
@@ -177,9 +281,40 @@ export default function Page() {
           id="hivernage"
           className="min-h-screen flex items-center px-4 py-20 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="hivernageTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#hivernageTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>
@@ -192,9 +327,40 @@ export default function Page() {
           id="entretien"
           className="min-h-screen flex items-center px-4 py-20 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="entretienTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#entretienTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>
@@ -207,9 +373,40 @@ export default function Page() {
           id="terrasses"
           className="min-h-screen flex items-center px-4 py-20 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="terrassesTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#terrassesTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 w-full" data-reveal>
@@ -222,9 +419,40 @@ export default function Page() {
           id="nos-realisations"
           className="min-h-screen flex items-center px-4 py-16 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="realisationsTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#realisationsTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 max-w-5xl mx-auto w-full" data-reveal>
@@ -239,9 +467,40 @@ export default function Page() {
           id="contact"
           className="min-h-screen flex items-center px-4 py-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
         >
-          {/* Vague décor en haut de section (harmonisée) */}
+          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            <WaveBackground color="#b6ecfe" height={60} opacity={0.8} />
+            {/* Bande sommitale en forme de vague (dégradé doux) */}
+            <svg
+              className="absolute inset-x-0 top-0"
+              width="100%"
+              height="12"
+              viewBox="0 0 100 12"
+              preserveAspectRatio="none"
+              style={{ display: "block", pointerEvents: "none" }}
+            >
+              <defs>
+                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
+                <linearGradient id="contactTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
+                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
+                fill="url(#contactTopWaveGrad)"
+              />
+            </svg>
+            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
+            <RealisticWaveEffect 
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
           </div>
 
           <div className="relative z-10 mx-auto w-full" data-reveal>
@@ -279,66 +538,66 @@ function ModernConstructionSection() {
   };
 
   return (
-    <div ref={ref} className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaDraftingCompass className="text-sky-500 text-3xl" />
-        Construction de Piscine : Étapes & Conseils
+    <div ref={ref} className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-3 sm:mb-4 text-center justify-center">
+        <FaDraftingCompass className="text-2xl sm:text-3xl text-sky-500" />
+        <span className="leading-tight">Construction de Piscine : Étapes & Conseils</span>
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-3 sm:mt-4 text-gray-700 text-base sm:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
         Créer un équilibre parfait entre votre jardin et votre piscine. Chaque projet est unique et conçu sur mesure : formes variées, débordement, couloir de nage, piscine miroir.
       </p>
-      <div className="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {/* Card 1 - Étude de faisabilité */}
         <div
-          className="p-5 md:p-6 min-h-[260px] md:min-h-[300px] rounded-2xl bg-white/95 backdrop-blur shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 border border-sky-100 cursor-pointer"
+          className="p-4 sm:p-5 md:p-6 min-h-[180px] sm:min-h-[220px] md:min-h-[260px] rounded-2xl bg-white/95 shadow-2xl border border-sky-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
           onClick={() => handleOpenModal("Étude de faisabilité", explications.faisabilite, <FaDraftingCompass className="text-sky-500" />)}
         >
           <div className="text-center">
-            <FaDraftingCompass className="text-4xl text-sky-500 mx-auto mb-3" />
-            <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-800">Étude de faisabilité</h3>
+            <FaDraftingCompass className="text-2xl sm:text-3xl text-sky-500 mx-auto mb-2 sm:mb-3" />
+            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-800">Étude de faisabilité</h3>
           </div>
           <div className="flex-1 flex items-center">
-            <ul className="text-gray-700 text-[15px] md:text-base space-y-1.5 leading-relaxed w-full">
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span>Analyse du terrain</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span>Implantation optimale</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span>Gestion des contraintes</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span>Démarches administratives</span></li>
+            <ul className="text-gray-700 text-sm sm:text-[15px] md:text-base space-y-1 sm:space-y-1.5 leading-relaxed w-full">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-xs sm:text-sm flex-shrink-0" /><span>Analyse du terrain</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-xs sm:text-sm flex-shrink-0" /><span>Implantation optimale</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-xs sm:text-sm flex-shrink-0" /><span>Gestion des contraintes</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-sky-400 text-xs sm:text-sm flex-shrink-0" /><span>Démarches administratives</span></li>
             </ul>
           </div>
         </div>
         {/* Card 2 - Étapes de construction */}
         <div
-          className="p-5 md:p-6 min-h-[260px] md:min-h-[300px] rounded-2xl bg-gradient-to-br from-sky-400 to-cyan-400 text-white shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
+          className="p-4 sm:p-5 md:p-6 min-h-[180px] sm:min-h-[220px] md:min-h-[260px] rounded-2xl bg-gradient-to-br from-sky-400 to-cyan-400 text-white shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
           onClick={() => handleOpenModal("Étapes de construction", explications.construction, <FaCogs className="text-cyan-500" />)}
         >
           <div className="text-center">
-            <FaCogs className="text-4xl mx-auto mb-3" />
-            <h3 className="text-lg md:text-xl font-bold mb-3">Étapes de construction</h3>
+            <FaCogs className="text-2xl sm:text-3xl mx-auto mb-2 sm:mb-3" />
+            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">Étapes de construction</h3>
           </div>
           <div className="flex-1 flex items-center">
-            <ul className="text-white/95 text-[15px] md:text-base space-y-1.5 leading-relaxed w-full">
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span>Terrassement</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span>Structure béton</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span>Filtration & équipements</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span>Finitions & paysager</span></li>
+            <ul className="text-white/95 text-sm sm:text-[15px] md:text-base space-y-1 sm:space-y-1.5 leading-relaxed w-full">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-xs sm:text-sm drop-shadow flex-shrink-0" /><span>Terrassement</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-xs sm:text-sm drop-shadow flex-shrink-0" /><span>Structure béton</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-xs sm:text-sm drop-shadow flex-shrink-0" /><span>Filtration & équipements</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-white text-xs sm:text-sm drop-shadow flex-shrink-0" /><span>Finitions & paysager</span></li>
             </ul>
           </div>
         </div>
         {/* Card 3 - Projet personnalisé */}
         <div
-          className="p-5 md:p-6 min-h-[260px] md:min-h-[300px] rounded-2xl bg-white/95 backdrop-blur shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 border border-cyan-100 cursor-pointer"
+          className="p-4 sm:p-5 md:p-6 min-h-[180px] sm:min-h-[220px] md:min-h-[260px] rounded-2xl bg-white/95 shadow-2xl border border-cyan-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
           onClick={() => handleOpenModal("Projet personnalisé", explications.personnalise, <FaGem className="text-cyan-500" />)}
         >
           <div className="text-center">
-            <FaGem className="text-4xl text-cyan-500 mx-auto mb-3" />
-            <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-800">Projet personnalisé</h3>
+            <FaGem className="text-2xl sm:text-3xl text-cyan-500 mx-auto mb-2 sm:mb-3" />
+            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-800">Projet personnalisé</h3>
           </div>
           <div className="flex-1 flex items-center">
-            <ul className="text-gray-700 text-[15px] md:text-base space-y-1.5 leading-relaxed w-full">
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span>Design esthétique</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span>Facilité d'usage</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span>Matériaux premium</span></li>
-              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span>Éclairage LED</span></li>
+            <ul className="text-gray-700 text-sm sm:text-[15px] md:text-base space-y-1 sm:space-y-1.5 leading-relaxed w-full">
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-xs sm:text-sm flex-shrink-0" /><span>Design esthétique</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-xs sm:text-sm flex-shrink-0" /><span>Facilité d'usage</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-xs sm:text-sm flex-shrink-0" /><span>Matériaux premium</span></li>
+              <li className="flex items-center gap-2"><FaCheckCircle className="text-cyan-400 text-xs sm:text-sm flex-shrink-0" /><span>Éclairage LED</span></li>
             </ul>
           </div>
         </div>
@@ -381,44 +640,44 @@ function ModernRenovationSection() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaRedo className="text-cyan-500 text-3xl" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 text-center justify-center">
+        <FaRedo className="text-cyan-500 text-2xl sm:text-3xl" />
         Rénovation de Piscine
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Rafraîchissement partiel ou transformation complète : nous redonnons vie à votre bassin avec des solutions durables et esthétiques.
       </p>
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Remplacement de revêtements", explications.revetements, <FaTools className="text-sky-500" />)}>
-          <FaTools className="text-3xl text-sky-500 mb-2" />
-            <h3 className="font-bold text-lg md:text-xl mb-1">Remplacement de revêtements</h3>
-            <p className="text-gray-600 text-center text-[15px] md:text-base">Liner, carrelage, PVC armé</p>
+          <FaTools className="text-2xl sm:text-3xl text-sky-500 mb-2" />
+            <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Remplacement de revêtements</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Liner, carrelage, PVC armé</p>
         </div>
-          <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Réparation de fuites & étanchéité", explications.fuites, <FaWater className="text-cyan-500" />)}>
-          <FaWater className="text-3xl text-cyan-500 mb-2" />
-            <h3 className="font-bold text-lg md:text-xl mb-1">Réparation de fuites & étanchéité</h3>
-            <p className="text-gray-600 text-center text-[15px] md:text-base">Diagnostic et solutions durables</p>
+          <FaWater className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+            <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Réparation de fuites & étanchéité</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Diagnostic et solutions durables</p>
         </div>
-          <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Modernisation", explications.modernisation, <FaCogs className="text-blue-400" />)}>
-          <FaCogs className="text-3xl text-blue-400 mb-2" />
-            <h3 className="font-bold text-lg md:text-xl mb-1">Modernisation</h3>
-            <p className="text-gray-600 text-center text-[15px] md:text-base">Filtration, LED, chauffage, domotique</p>
+          <FaCogs className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+            <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Modernisation</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Filtration, LED, chauffage, domotique</p>
         </div>
-          <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Refonte du bassin", explications.refonte, <FaHammer className="text-sky-500" />)}>
-          <FaHammer className="text-3xl text-sky-500 mb-2" />
-            <h3 className="font-bold text-lg md:text-xl mb-1">Refonte du bassin</h3>
-            <p className="text-gray-600 text-center text-[15px] md:text-base">Forme, profondeur, accès</p>
+          <FaHammer className="text-2xl sm:text-3xl text-sky-500 mb-2" />
+            <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Refonte du bassin</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Forme, profondeur, accès</p>
         </div>
-          <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Mise en conformité sécurité", explications.conformite, <FaShieldAlt className="text-cyan-500" />)}>
-          <FaShieldAlt className="text-3xl text-cyan-500 mb-2" />
-            <h3 className="font-bold text-lg md:text-xl mb-1">Mise en conformité sécurité</h3>
-            <p className="text-gray-600 text-center text-[15px] md:text-base">Sécurité et normes actualisées</p>
+          <FaShieldAlt className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+            <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Mise en conformité sécurité</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Sécurité et normes actualisées</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -451,37 +710,38 @@ function ModernDepannageSection() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaWrench className="text-blue-400 text-3xl" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 text-center justify-center">
+        <FaWrench className="text-blue-400 text-2xl sm:text-3xl" />
         Dépannage Piscine
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Une panne ne prévient jamais. Intervention rapide, diagnostic précis, réparations efficaces pour retrouver votre tranquillité.
       </p>
-      <div className="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Intervention rapide", explications.intervention, <FaCheckCircle className="text-sky-500" />)}>
-          <FaCheckCircle className="text-3xl text-sky-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Intervention rapide</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Sur site, sans délai</p>
+          <FaCheckCircle className="text-2xl sm:text-3xl text-sky-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Intervention rapide</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Sur site, sans délai</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Diagnostic & solutions sur mesure", explications.diagnostic, <FaCogs className="text-cyan-500" />)}>
-          <FaCogs className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Diagnostic & solutions sur mesure</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Analyse précise, réparation adaptée</p>
+          <FaCogs className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Diagnostic & solutions sur mesure</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Analyse précise, réparation adaptée</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Réparations", explications.reparations, <FaTools className="text-blue-400" />)}>
-          <FaTools className="text-3xl text-blue-400 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Réparations</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Filtration, fuites, pompes, éclairage, etc.</p>
+          <FaTools className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Réparations</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Filtration, fuites, pompes, éclairage, etc.</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Suivi & conseils", explications.suivi, <FaLeaf className="text-cyan-500" />)}>
-          <FaLeaf className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Suivi & conseils</h3>
+          <FaLeaf className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Suivi & conseils</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Accompagnement post-réparation</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -515,44 +775,44 @@ function ModernHivernageSection() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaSnowflake className="text-cyan-500 text-3xl" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 text-center justify-center">
+        <FaSnowflake className="text-cyan-500 text-2xl sm:text-3xl" />
         Hivernage Piscine
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Protégez votre investissement : préparation minutieuse pour l'hiver et remise en service au printemps.
       </p>
-      <div className="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Protection du bassin", explications.protection, <FaShieldAlt className="text-cyan-500" />)}>
-          <FaShieldAlt className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Protection du bassin</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Hivernage adapté & professionnel</p>
+          <FaShieldAlt className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Protection du bassin</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Hivernage adapté & professionnel</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Traitement chimique hivernal", explications.traitement, <FaFlask className="text-blue-400" />)}>
-          <FaFlask className="text-3xl text-blue-400 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Traitement chimique hivernal</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Équilibre & stabilisation de l'eau</p>
+          <FaFlask className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Traitement chimique hivernal</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Équilibre & stabilisation de l'eau</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Protection équipements", explications.equipements, <FaCogs className="text-sky-500" />)}>
-          <FaCogs className="text-3xl text-sky-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Protection équipements</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Pompes, filtres, canalisations</p>
+          <FaCogs className="text-2xl sm:text-3xl text-sky-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Protection équipements</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Pompes, filtres, canalisations</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Installation couvertures", explications.couverture, <FaUmbrella className="text-cyan-500" />)}>
-          <FaUmbrella className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Installation couvertures</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Accessoires d'hivernage</p>
+          <FaUmbrella className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Installation couvertures</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Accessoires d'hivernage</p>
         </div>
-  <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+  <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Remise en service", explications.remise, <FaPlay className="text-blue-400" />)}>
-          <FaPlay className="text-3xl text-blue-400 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Remise en service</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Retour printemps</p>
+          <FaPlay className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Remise en service</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Retour printemps</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -586,44 +846,44 @@ function ModernEntretienSection() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaBroom className="text-blue-400 text-3xl" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 text-center justify-center">
+        <FaBroom className="text-blue-400 text-2xl sm:text-3xl" />
         Entretien Piscine
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Une eau cristalline toute l'année : entretien professionnel, nettoyage et équilibrage pour votre sérénité.
       </p>
-      <div className="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Entretien quotidien", explications.quotidien, <FaCheckCircle className="text-cyan-500" />)}>
-          <FaCheckCircle className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Entretien quotidien</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Eau cristalline en permanence</p>
+          <FaCheckCircle className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Entretien quotidien</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Eau cristalline en permanence</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Nettoyage", explications.nettoyage, <FaBroom className="text-blue-400" />)}>
-          <FaBroom className="text-3xl text-blue-400 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Nettoyage</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Bassin, parois, fond</p>
+          <FaBroom className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Nettoyage</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Bassin, parois, fond</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Équilibrage chimique", explications.equilibre, <FaFlask className="text-sky-500" />)}>
-          <FaFlask className="text-3xl text-sky-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Équilibrage chimique</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">pH, chlore, alcalinité</p>
+          <FaFlask className="text-2xl sm:text-3xl text-sky-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Équilibrage chimique</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">pH, chlore, alcalinité</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Maintenance équipements", explications.maintenance, <FaCogs className="text-cyan-500" />)}>
-          <FaCogs className="text-3xl text-cyan-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Maintenance équipements</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Prévention & performance</p>
+          <FaCogs className="text-2xl sm:text-3xl text-cyan-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Maintenance équipements</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Prévention & performance</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Contrôles & optimisation", explications.controles, <FaClipboardCheck className="text-blue-400" />)}>
-          <FaClipboardCheck className="text-3xl text-blue-400 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Contrôles & optimisation</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Conseils d'experts</p>
+          <FaClipboardCheck className="text-2xl sm:text-3xl text-blue-400 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Contrôles & optimisation</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Conseils d'experts</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -656,38 +916,38 @@ function ModernTerrassesSection() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl">
-      <h2 className="text-2xl md:text-4xl font-semibold flex items-center gap-3 mb-4 text-center justify-center">
-        <FaClone className="text-amber-500 text-3xl" />
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-4 text-center justify-center">
+        <FaClone className="text-amber-500 text-2xl sm:text-3xl" />
         Terrasses & Aménagements
       </h2>
-      <p className="mt-4 text-gray-700 text-lg text-center max-w-3xl mx-auto mb-8">
+      <p className="mt-4 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8">
         Sublimez votre espace piscine : terrasses sur mesure, matériaux premium et aménagements paysagers.
       </p>
-      <div className="grid gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Conception & réalisation", explications.conception, <FaRuler className="text-amber-500" />)}>
-          <FaRuler className="text-3xl text-amber-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Conception & réalisation</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Terrasses sur mesure</p>
+          <FaRuler className="text-2xl sm:text-3xl text-amber-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Conception & réalisation</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Terrasses sur mesure</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Matériaux premium", explications.materiaux, <FaGem className="text-yellow-500" />)}>
-          <FaGem className="text-3xl text-yellow-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Matériaux premium</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Bois, composite, pierre, carrelage</p>
+          <FaGem className="text-2xl sm:text-3xl text-yellow-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Matériaux premium</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Bois, composite, pierre, carrelage</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Aménagement paysager", explications.amenagement, <FaLeaf className="text-green-500" />)}>
-          <FaLeaf className="text-3xl text-green-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Aménagement paysager</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Espaces verts & éclairage</p>
+          <FaLeaf className="text-2xl sm:text-3xl text-green-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Aménagement paysager</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Espaces verts & éclairage</p>
         </div>
-        <div className="p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300"
+        <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-white/90 backdrop-blur shadow-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[140px] sm:min-h-[160px]"
              onClick={() => handleOpenModal("Entretien & rénovation", explications.entretien, <FaBroom className="text-amber-500" />)}>
-          <FaBroom className="text-3xl text-amber-500 mb-2" />
-          <h3 className="font-bold text-lg md:text-xl mb-1">Entretien & rénovation</h3>
-          <p className="text-gray-600 text-center text-[15px] md:text-base">Nettoyage, réparation, protection</p>
+          <FaBroom className="text-2xl sm:text-3xl text-amber-500 mb-2" />
+          <h3 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl mb-1 text-center">Entretien & rénovation</h3>
+          <p className="text-gray-600 text-center text-xs sm:text-sm md:text-[15px] lg:text-base">Nettoyage, réparation, protection</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>

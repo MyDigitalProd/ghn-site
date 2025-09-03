@@ -1,15 +1,56 @@
 "use client"; // Exécute ce composant côté client (animations, hooks React)
 
 import { useId } from "react"; // Génère un identifiant unique pour éviter les collisions d'IDs SVG
+import WaterParticles from "./WaterParticles"; // Import du composant de particules
+import StagnantWaterRipple from "./StagnantWaterRipple"; // Import des ondulations
 
-// Composant de vague décorative placé "en overlay" dans une section
-export default function WaveBackground({ color = "#b6ecfe", height = 90, opacity = 0.7 }) {
+// Composant de vague décorative placé "en overlay" dans une section avec effet de profondeur
+export default function WaveBackground({ 
+  color = "#b6ecfe", 
+  height = 90, 
+  opacity = 0.7, 
+  particles = true, // Nouvelle prop pour activer/désactiver les particules
+  particleCount = 6, // Nombre de particules
+  ripples = true, // Ondulations d'eau stagnante
+  rippleIntensity = 0.4 // Intensité des ondulations
+}) {
   const uid = useId();                    // ID unique par instance (évite conflits si plusieurs vagues)
   const id1 = `${uid}-fade1`;             // ID unique pour le gradient 1
   const id2 = `${uid}-fade2`;             // ID unique pour le gradient 2
+  const id3 = `${uid}-fade3`;             // ID unique pour le gradient 3 (profondeur)
 
   return (
     <div style={{ position: "relative", width: "120%", left: "-10%" }}> {/* Dépassement latéral pour couvrance */}
+      
+      {/* Vague 3 (arrière-plan, la plus profonde) */}
+      <svg
+        width="100%"                       // Pleine largeur
+        height={height}                    // Même hauteur
+        viewBox="0 0 1400 140"             // Même vue
+        preserveAspectRatio="none"         // Même étirement
+        style={{
+          display: "block",                // Pas d'espace inline
+          opacity: opacity * 0.3,          // Très discrète (profondeur)
+          pointerEvents: "none",           // Non cliquable
+          position: "absolute",            // Superposée
+          top: 0,                          // En haut
+          left: 0,                         // À gauche
+          zIndex: -1,                      // La plus en arrière
+        }}
+        className="wave-anim3"             // Troisième animation (lente)
+      >
+        <defs>                             {/* Gradient 3 */}
+          <linearGradient id={id3} x1="0" x2="0" y1="0" y2="1">         {/* ID unique */}
+            <stop offset="0%" stopColor="#f0f9ff" stopOpacity="0.8" />  {/* Teinte très claire */}
+            <stop offset="100%" stopColor="#f0f9ff" stopOpacity="0" />  {/* Fondu */}
+          </linearGradient>
+        </defs>
+        <path
+          d="M0,100 C250,140 500,60 750,100 C1000,140 1150,80 1400,100 L1400,140 L0,140 Z" // Courbe très douce
+          fill={`url(#${id3})`}            // Remplissage avec gradient 3
+        />
+      </svg>
+
       {/* Vague 1 (au-dessus) */}
       <svg
         width="100%"                       // Prend toute la largeur du conteneur
@@ -70,18 +111,50 @@ export default function WaveBackground({ color = "#b6ecfe", height = 90, opacity
 
       {/* Animations locales (styled-jsx, scoped au composant) */}
       <style jsx>{`
-        .wave-anim1 { animation: waveMove1 12s linear infinite; }  /* Défilement lent gauche */
-        .wave-anim2 { animation: waveMove2 18s linear infinite; }  /* Défilement lent droite */
+        .wave-anim1 { animation: waveMove1 18s ease-in-out infinite; }  /* Va-et-vient doux */
+        .wave-anim2 { animation: waveMove2 22s ease-in-out infinite; }  /* Mouvement lent opposé */
+        .wave-anim3 { animation: waveMove3 28s ease-in-out infinite; }  /* Très lent (eau stagnante) */
 
         @keyframes waveMove1 {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-60px); }
+          0% { transform: translateX(0) scale(1); }
+          25% { transform: translateX(-20px) scale(1.015); }
+          50% { transform: translateX(-40px) scale(1.03); }
+          75% { transform: translateX(-20px) scale(1.015); }
+          100% { transform: translateX(0) scale(1); }
         }
         @keyframes waveMove2 {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(60px); }
+          0% { transform: translateX(0) scale(1); }
+          33% { transform: translateX(25px) scale(0.985); }
+          66% { transform: translateX(50px) scale(0.97); }
+          100% { transform: translateX(25px) scale(0.985); }
+        }
+        @keyframes waveMove3 {
+          0% { transform: translateX(0) rotateZ(0deg) scale(1); }
+          25% { transform: translateX(-15px) rotateZ(0.3deg) scale(1.01); }
+          50% { transform: translateX(8px) rotateZ(-0.2deg) scale(0.99); }
+          75% { transform: translateX(-25px) rotateZ(0.4deg) scale(1.02); }
+          100% { transform: translateX(0) rotateZ(0deg) scale(1); }
         }
       `}</style>
+
+      {/* Ondulations d'eau stagnante (optionnelles) */}
+      {ripples && (
+        <StagnantWaterRipple 
+          color={color}
+          opacity={opacity * 0.4}
+          intensity={rippleIntensity}
+        />
+      )}
+
+      {/* Particules d'eau flottantes (optionnelles) */}
+      {particles && (
+        <WaterParticles 
+          count={particleCount}
+          color={color}
+          size={{ min: 2, max: 6 }}
+          speed={{ min: 20, max: 40 }}
+        />
+      )}
     </div>
   );
 } // ← Fin du composant (une seule accolade fermante)
