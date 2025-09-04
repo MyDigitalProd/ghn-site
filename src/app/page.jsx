@@ -74,10 +74,10 @@ export default function Page() {
         {/* ====== ACCUEIL ====== */}
         <section
           id="accueil"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -112,7 +112,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2" data-reveal>
+          <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2 flex-1 pt-[90px] px-4 items-center justify-center" data-reveal>
             <div className="flex flex-col justify-center">                  {/* Colonne texte */}
               <h1 className="text-3xl md:text-5xl font-bold leading-tight"> {/* Titre */}
                 GHN Group – Piscines & Extérieurs d'Exception               {/* Libellé */}
@@ -128,11 +128,11 @@ export default function Page() {
             </div>
 
             {/* Image logo de l'entreprise */}
-            <div className="flex items-center justify-center aspect-[4/3]">
+            <div className="flex items-center justify-center w-full max-w-full">
               <img 
                 src="/img/logo adam fini (2).png" 
                 alt="Logo GHN Group - Piscines & Extérieurs" 
-                className="max-w-full max-h-full object-contain p-6 rounded-xl"
+                className="w-full h-auto max-w-full max-h-full object-contain p-4"
               />
             </div>
           </div>
@@ -141,10 +141,10 @@ export default function Page() {
         {/* ====== CONSTRUCTION ====== */}
         <section
           id="construction"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -179,7 +179,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>                 {/* Bloc révélé */}
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>                 {/* Bloc révélé */}
             <ModernConstructionSection />                                     {/* Section détaillée */}
           </div>
         </section>
@@ -187,10 +187,10 @@ export default function Page() {
         {/* ====== RÉNOVATION ====== */}
         <section
           id="renovation"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -225,7 +225,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernRenovationSection />
           </div>
         </section>
@@ -233,10 +233,10 @@ export default function Page() {
         {/* ====== DÉPANNAGE ====== */}
         <section
           id="depannage"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -271,7 +271,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernDepannageSection />
           </div>
         </section>
@@ -279,10 +279,10 @@ export default function Page() {
         {/* ====== HIVERNAGE ====== */}
         <section
           id="hivernage"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -317,7 +317,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernHivernageSection />
           </div>
         </section>
@@ -325,10 +325,10 @@ export default function Page() {
         {/* ====== ENTRETIEN ====== */}
         <section
           id="entretien"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -363,7 +363,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernEntretienSection />
           </div>
         </section>
@@ -371,10 +371,10 @@ export default function Page() {
         {/* ====== TERRASSES ====== */}
         <section
           id="terrasses"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -409,7 +409,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 w-full" data-reveal>
+          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernTerrassesSection />
           </div>
         </section>
@@ -417,7 +417,7 @@ export default function Page() {
         {/* ====== NOS RÉALISATIONS ====== */}
         <section
           id="nos-realisations"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
           <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
@@ -455,20 +455,22 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 max-w-5xl mx-auto w-full" data-reveal>
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
-            <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
-            <RealisationsCarousel />
+          <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+            <div className="w-full">
+              <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
+              <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
+              <RealisationsCarousel />
+            </div>
           </div>
         </section>
 
         {/* ====== CONTACT ====== */}
         <section
           id="contact"
-          className="min-h-screen flex items-center px-4 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative"
+          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
         >
           {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
+          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
             {/* Bande sommitale en forme de vague (dégradé doux) */}
             <svg
               className="absolute inset-x-0 top-0"
@@ -503,7 +505,7 @@ export default function Page() {
             />
           </div>
 
-          <div className="relative z-10 mx-auto w-full" data-reveal>
+          <div className="relative z-10 mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <InteractiveContact />
           </div>
         </section>
