@@ -1,5 +1,5 @@
-// Import des icônes Instagram et WhatsApp depuis react-icons
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+// Import de l'icône Instagram depuis react-icons
+import { FaInstagram } from "react-icons/fa";
 
 // Composant Footer, affiché en bas de toutes les pages
 export default function Footer() {
@@ -13,23 +13,11 @@ export default function Footer() {
       <p>
         Développement : MyDigitalProd.
         <a
-          href="https://www.instagram.com/mydigitalprod"
+          href="https://www.instagram.com/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Instagram MyDigitalProd"
-          title="Instagram MyDigitalProd"
         >
           <FaInstagram />
-        </a>
-        {" "}
-        <a
-          href="https://wa.me/32456833300"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="WhatsApp MyDigitalProd"
-          title="WhatsApp MyDigitalProd"
-        >
-          <FaWhatsapp />
         </a>
       </p>
     </footer>

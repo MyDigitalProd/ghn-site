@@ -1,3 +1,6 @@
+/* Import des composants SCSS (doit être avant toute règle) */
+@use "./components/Footer";
+
 /* === Animations reveal (entrée/sortie) === */
 @keyframes revealIn { /* Apparition douce */
   from { opacity: 0; transform: translateY(24px); filter: blur(6px); } /* Départ caché */
@@ -30,3 +33,5 @@ body {
   * { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; }
   html :where(.scroll-smooth) { scroll-behavior: auto !important; } /* Désactive scroll smooth si gênant */
 }
+
+/* Styles composants (Footer, etc.) */
