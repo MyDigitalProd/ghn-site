@@ -5,7 +5,8 @@ import React, { useEffect, useRef, useState, useMemo } from "react"; // Hooks Re
 import {
   FaDraftingCompass, FaCogs, FaGem, FaTools, FaRedo, FaWrench, FaSnowflake,
   FaLeaf, FaShieldAlt, FaWater, FaCheckCircle, FaHammer, FaPhoneAlt, FaEnvelope, FaUser,
-  FaFlask, FaUmbrella, FaPlay, FaBroom, FaClipboardCheck, FaClone, FaRuler
+  FaFlask, FaUmbrella, FaPlay, FaBroom, FaClipboardCheck, FaClone, FaRuler,
+  FaSearchLocation, FaHardHat, FaPaintBrush, FaPalette
 } from "react-icons/fa"; // Icônes
 import WaveBackground from "../components/WaveBackground"; // Vague décorative
 import PS3WaveEffect from "../components/PS3WaveEffect"; // Effet vagues PlayStation 3
@@ -180,53 +181,53 @@ function ModernConstructionSection() {
       <p className="mt-3 sm:mt-4 text-gray-700 text-base sm:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
         Créer un équilibre parfait entre votre jardin et votre piscine. Chaque projet est unique et conçu sur mesure : formes variées, débordement, couloir de nage, piscine miroir.
       </p>
-      <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 md:gap-6 max-w-7xl mx-auto">
         {/* Card 1 - Étude de faisabilité */}
         <div
-          className="p-4 sm:p-5 md:p-6 min-h-[160px] sm:min-h-[180px] md:min-h-[200px] rounded-2xl bg-white/95 shadow-2xl border border-sky-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
-          onClick={() => handleOpenModal("Étude de faisabilité", explications.faisabilite, <FaDraftingCompass className="text-sky-500" />)}
+          className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-white/95 shadow-2xl border border-sky-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
+          onClick={() => handleOpenModal("Étude de faisabilité", explications.faisabilite, <FaClipboardCheck className="text-sky-500" />)}
         >
-          <div className="text-center">
-            <FaDraftingCompass className="text-2xl sm:text-3xl text-sky-500 mx-auto mb-2 sm:mb-3" />
-            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-800">Étude de faisabilité</h3>
+          <div className="text-center mb-4">
+            <FaClipboardCheck className="text-3xl sm:text-4xl text-sky-500 mx-auto mb-3" />
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">Étude de faisabilité</h3>
           </div>
-          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-gray-700 text-xs sm:text-sm md:text-base">
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-sky-400 text-xs flex-shrink-0" /><span>Analyse du terrain</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-sky-400 text-xs flex-shrink-0" /><span>Implantation optimale</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-sky-400 text-xs flex-shrink-0" /><span>Gestion des contraintes</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-sky-400 text-xs flex-shrink-0" /><span>Démarches administratives</span></div>
+          <div className="space-y-3 flex-1">
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Analyse complète du terrain</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Implantation optimale</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Gestion des contraintes</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Démarches administratives</span></div>
           </div>
         </div>
         {/* Card 2 - Étapes de construction */}
         <div
-          className="p-4 sm:p-5 md:p-6 min-h-[160px] sm:min-h-[180px] md:min-h-[200px] rounded-2xl bg-gradient-to-br from-sky-400 to-cyan-400 text-white shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
-          onClick={() => handleOpenModal("Étapes de construction", explications.construction, <FaCogs className="text-cyan-500" />)}
+          className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-sky-400 to-cyan-400 text-white shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
+          onClick={() => handleOpenModal("Étapes de construction", explications.construction, <FaHammer className="text-cyan-500" />)}
         >
-          <div className="text-center">
-            <FaCogs className="text-2xl sm:text-3xl mx-auto mb-2 sm:mb-3" />
-            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3">Étapes de construction</h3>
+          <div className="text-center mb-4">
+            <FaHammer className="text-3xl sm:text-4xl text-white mx-auto mb-3" />
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-white">Étapes de construction</h3>
           </div>
-          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-white/95 text-xs sm:text-sm md:text-base">
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-white text-xs drop-shadow flex-shrink-0" /><span>Terrassement</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-white text-xs drop-shadow flex-shrink-0" /><span>Structure béton</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-white text-xs drop-shadow flex-shrink-0" /><span>Filtration & équipements</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-white text-xs drop-shadow flex-shrink-0" /><span>Finitions & paysager</span></div>
+          <div className="space-y-3 flex-1">
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Terrassement professionnel</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Structure béton armé</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Filtration & équipements</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Finitions & aménagement paysager</span></div>
           </div>
         </div>
         {/* Card 3 - Projet personnalisé */}
         <div
-          className="p-4 sm:p-5 md:p-6 min-h-[160px] sm:min-h-[180px] md:min-h-[200px] rounded-2xl bg-white/95 shadow-2xl border border-cyan-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer"
-          onClick={() => handleOpenModal("Projet personnalisé", explications.personnalise, <FaGem className="text-cyan-500" />)}
+          className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-white/95 shadow-2xl border border-cyan-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
+          onClick={() => handleOpenModal("Projet personnalisé", explications.personnalise, <FaPalette className="text-cyan-500" />)}
         >
-          <div className="text-center">
-            <FaGem className="text-2xl sm:text-3xl text-cyan-500 mx-auto mb-2 sm:mb-3" />
-            <h3 className="text-base sm:text-lg md:text-xl font-bold mb-2 sm:mb-3 text-gray-800">Projet personnalisé</h3>
+          <div className="text-center mb-4">
+            <FaPalette className="text-3xl sm:text-4xl text-cyan-500 mx-auto mb-3" />
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">Projet personnalisé</h3>
           </div>
-          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-gray-700 text-xs sm:text-sm md:text-base">
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" /><span>Design esthétique</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" /><span>Facilité d'usage</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" /><span>Matériaux premium</span></div>
-            <div className="flex items-center gap-1"><FaCheckCircle className="text-cyan-400 text-xs flex-shrink-0" /><span>Éclairage LED</span></div>
+          <div className="space-y-3 flex-1">
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Design sur mesure esthétique</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Facilité d'utilisation optimale</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Matériaux haut de gamme</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Éclairage LED intégré</span></div>
           </div>
         </div>
       </div>
