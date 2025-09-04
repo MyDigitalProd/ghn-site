@@ -58,8 +58,7 @@ export default function Page() {
   // Rendu principal
   return (
     <>
-      {/* Fond global discret (dégradé bleu très léger) */}
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50" /> {/* Arrière-plan */}
+  {/* Fond global désormais géré dans layout.jsx */}
 
       {/* MobileNavBar visible uniquement sur mobile */}
       <div className="lg:hidden">
@@ -74,43 +73,8 @@ export default function Page() {
         {/* ====== ACCUEIL ====== */}
         <section
           id="accueil"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="accueilTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#accueilTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2 flex-1 pt-[90px] px-4 items-center justify-center" data-reveal>
             <div className="flex flex-col justify-center">                  {/* Colonne texte */}
@@ -141,43 +105,8 @@ export default function Page() {
         {/* ====== CONSTRUCTION ====== */}
         <section
           id="construction"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="constructionTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#constructionTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>                 {/* Bloc révélé */}
             <ModernConstructionSection />                                     {/* Section détaillée */}
@@ -187,43 +116,8 @@ export default function Page() {
         {/* ====== RÉNOVATION ====== */}
         <section
           id="renovation"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="renovationTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#renovationTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernRenovationSection />
@@ -233,43 +127,8 @@ export default function Page() {
         {/* ====== DÉPANNAGE ====== */}
         <section
           id="depannage"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="depannageTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#depannageTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernDepannageSection />
@@ -279,43 +138,8 @@ export default function Page() {
         {/* ====== HIVERNAGE ====== */}
         <section
           id="hivernage"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="hivernageTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#hivernageTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernHivernageSection />
@@ -325,43 +149,8 @@ export default function Page() {
         {/* ====== ENTRETIEN ====== */}
         <section
           id="entretien"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="entretienTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#entretienTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernEntretienSection />
@@ -371,43 +160,8 @@ export default function Page() {
         {/* ====== TERRASSES ====== */}
         <section
           id="terrasses"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="terrassesTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#terrassesTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <ModernTerrassesSection />
@@ -417,43 +171,8 @@ export default function Page() {
         {/* ====== NOS RÉALISATIONS ====== */}
         <section
           id="nos-realisations"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="realisationsTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#realisationsTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <div className="w-full">
@@ -467,43 +186,8 @@ export default function Page() {
         {/* ====== CONTACT ====== */}
         <section
           id="contact"
-          className="min-h-screen flex flex-col w-full bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50 relative overflow-hidden"
+          className="min-h-screen flex flex-col w-full relative overflow-hidden"
         >
-          {/* Vague décor en haut de section (effet Canvas dynamique mais doux) */}
-          <div className="absolute top-0 inset-x-0 z-0 pointer-events-none h-[90px] w-full">
-            {/* Bande sommitale en forme de vague (dégradé doux) */}
-            <svg
-              className="absolute inset-x-0 top-0"
-              width="100%"
-              height="12"
-              viewBox="0 0 100 12"
-              preserveAspectRatio="none"
-              style={{ display: "block", pointerEvents: "none" }}
-            >
-              <defs>
-                {/* Dégradé horizontal: plus visible à gauche, disparaît vers la droite */}
-                <linearGradient id="contactTopWaveGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0.25" />
-                  <stop offset="60%" stopColor="#cbd5e1" stopOpacity="0.10" />
-                  <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                d="M0,0 H100 V10 C85,9 70,10.8 55,9.5 C40,8.5 20,8 0,7 Z"
-                fill="url(#contactTopWaveGrad)"
-              />
-            </svg>
-            {/* Effet de vague Canvas doux avec courants croisés de piscine */}
-            <RealisticWaveEffect 
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
-              color="#009ee0"
-              opacity={0.4}
-              layers={4}
-            />
-          </div>
 
           <div className="relative z-10 mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
             <InteractiveContact />
@@ -766,7 +450,7 @@ function ModernHivernageSection() {
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center mb-7">
+  <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 sm:mb-3 text-center justify-center mb-7">
         <FaSnowflake className="text-cyan-500 text-3xl sm:text-4xl md:text-5xl" />
         Hivernage Piscine
       </h2>

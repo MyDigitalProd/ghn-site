@@ -2,6 +2,7 @@ import "../styles/tools/_tailwind.css"; // Tailwind v4 d’abord
 import "../styles/globals.scss";        // Styles SCSS globaux
 import Header from "@/components/Header"; // En-tête global
 import Footer from "@/components/Footer"; // Pied de page global
+import RealisticWaveEffect from "@/components/RealisticWaveEffect"; // Vague globale fixe
 
 export const metadata = {
   title: "GHN Group — Piscines & Extérieurs d’Exception",
@@ -12,6 +13,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body>
+        {/* Fond global fixe: dégradé + vague discrète en haut */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50" />
+          <div className="absolute top-0 inset-x-0 h-[90px]">
+            <RealisticWaveEffect
+              height={90}
+              amplitude={10}
+              frequency={0.007}
+              speed={0.015}
+              color="#009ee0"
+              opacity={0.4}
+              layers={4}
+            />
+          </div>
+        </div>
         <Header />
         <main>
           {children}
