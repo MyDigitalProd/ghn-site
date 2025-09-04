@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useSection } from "./SectionProvider";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* Sections & labels */
@@ -15,6 +16,7 @@ const LABELS = {
 const mod = (n, m) => ((n % m) + m) % m;
 
 export default function NavBar() {
+  const { active: ctxActive, setActive: setCtxActive } = useSection();
   /* State */
   const [activeId, setActiveId]   = useState("accueil");
   const [pickerOpen, setOpen]     = useState(false);
@@ -38,6 +40,9 @@ export default function NavBar() {
     let debounceId;
     let rafId;
     const onScroll = () => {
+      // Pas de scrollspy si la page ne scroll pas (mode scène)
+      const doc = document.documentElement;
+      if (doc && doc.scrollHeight <= window.innerHeight + 1) return;
       if (scrollSpyTicking.current) return;
       scrollSpyTicking.current = true;
 
@@ -80,6 +85,13 @@ export default function NavBar() {
     };
   }, []);
 
+  // Sync avec le contexte actif (mode scène)
+  useEffect(() => {
+    if (!ctxActive) return;
+    setActiveId(ctxActive);
+    setIndex(SECTION_IDS.indexOf(ctxActive));
+  }, [ctxActive]);
+
   /* Vague visible uniquement hors scroll */
   const hideWaveThenShow = useCallback((delay = 220) => {
     if (hideWaveTimer.current) clearTimeout(hideWaveTimer.current);
@@ -114,16 +126,13 @@ export default function NavBar() {
     // Update active après un délai pour smooth transition
     setTimeout(() => {
       setActiveId(targetId);
+      setCtxActive(targetId); // switch de section (mode scène)
       setOpen(false);
     }, 100);
     
-    const el = document.getElementById(targetId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => {
-        el.setAttribute("tabindex", "-1");
-        setWave(true); // Reactive animation
-      }, 300);
+    // En mode scène, pas de scroll. On met à jour l'URL pour deep-link.
+    if (history?.replaceState) {
+      history.replaceState(null, "", `#${targetId}`);
     }
   }, []);
   const handleClickLooped = useCallback((loopedIdx) => {

@@ -2,26 +2,19 @@
 import { useState, useEffect } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSection } from "./SectionProvider";
 
 export default function WhatsAppBubble({ hideOnContact = false }) {
+  const { active } = useSection();
   const [isContactVisible, setIsContactVisible] = useState(false);
   const phone = "33612345678"; // Remplace par ton numéro WhatsApp sans +
   const message = encodeURIComponent("Bonjour, je souhaite un devis pour une piscine !");
   const url = `https://wa.me/${phone}?text=${message}`;
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsContactVisible(entry.isIntersecting),
-      { threshold: 0.3 }
-    );
-
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      observer.observe(contactSection);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+    // Mode scène: masquer si section active = contact
+    setIsContactVisible(active === "contact");
+  }, [active]);
 
   return (
     <AnimatePresence mode="wait">

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useCallback } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useSection } from "./SectionProvider";
 
 const SECTIONS = [
   { id: "accueil", label: "Accueil" },
@@ -12,10 +13,12 @@ const SECTIONS = [
   { id: "hivernage", label: "Hivernage" },
   { id: "entretien", label: "Entretien" },
   { id: "terrasses", label: "Terrasses" },
+  { id: "nos-realisations", label: "Nos Réalisations" },
   { id: "contact", label: "Contact" },
 ];
 
 export default function MobileNavBar() {
+  const { active: ctxActive, setActive: setCtxActive } = useSection();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("accueil");
   const [hovered, setHovered] = useState("");
@@ -47,31 +50,14 @@ export default function MobileNavBar() {
   }, [open]);
 
   // Active section on scroll
-  useEffect(() => {
-    if (!open) {
-      const onScroll = () => {
-        let found = "accueil";
-        for (const s of SECTIONS) {
-          const el = document.getElementById(s.id);
-          if (!el) continue;
-          const r = el.getBoundingClientRect();
-          if (r.top <= 80 && r.bottom > 80) { found = s.id; break; }
-        }
-        setActive(found);
-      };
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-      return () => window.removeEventListener("scroll", onScroll);
-    }
-  }, [open]);
+  // Mode scène: pas de scrollspy, on suit le contexte
+  useEffect(() => { if (ctxActive) setActive(ctxActive); }, [ctxActive]);
 
   const handleNav = (id) => {
     setOpen(false);
     setActive(id);
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 250);
+    setCtxActive(id);
+    if (history?.replaceState) history.replaceState(null, "", `#${id}`);
   };
 
   return (

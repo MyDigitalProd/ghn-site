@@ -3,6 +3,7 @@ import "../styles/globals.scss";        // Styles SCSS globaux
 import Header from "@/components/Header"; // En-tête global
 import Footer from "@/components/Footer"; // Pied de page global
 import RealisticWaveEffect from "@/components/RealisticWaveEffect"; // Vague globale fixe
+import { SectionProvider } from "@/components/SectionProvider";
 
 export const metadata = {
   title: "GHN Group — Piscines & Extérieurs d’Exception",
@@ -12,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body>
+  <body>
         {/* Fond global fixe: dégradé + vague discrète en haut */}
         <div className="fixed inset-0 -z-10 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50" />
@@ -28,11 +29,13 @@ export default function RootLayout({ children }) {
             />
           </div>
         </div>
-        <Header />
-        <main>
-          {children}
-        </main>
-        <Footer />
+        <SectionProvider>
+          <Header />
+          <main className="relative min-h-screen overflow-hidden" style={{ height: '100dvh' }}>
+            {children}
+          </main>
+          <Footer />
+        </SectionProvider>
       </body>
     </html>
   );

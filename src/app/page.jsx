@@ -1,7 +1,7 @@
 "use client"; // Rend le fichier côté client pour autoriser les hooks
 
 // ----- Imports React & icônes -----
-import React, { useEffect, useRef, useState } from "react"; // Hooks React
+import React, { useEffect, useRef, useState, useMemo } from "react"; // Hooks React
 import {
   FaDraftingCompass, FaCogs, FaGem, FaTools, FaRedo, FaWrench, FaSnowflake,
   FaLeaf, FaShieldAlt, FaWater, FaCheckCircle, FaHammer, FaPhoneAlt, FaEnvelope, FaUser,
@@ -16,44 +16,28 @@ const InteractiveContact = dynamic(() => import("../components/InteractiveContac
 import InfoModal from "@/components/InfoModal";
 const RealisationsCarousel = dynamic(() => import("../components/RealisationsCarousel"), { ssr: false });
 const RealisticWaveEffect = dynamic(() => import("../components/RealisticWaveEffect"), { ssr: false });
+import { useSection } from "@/components/SectionProvider";
+import { AnimatePresence, motion } from "framer-motion";
 
 // ----- Page one-page GHN -----
 export default function Page() {
-  // Observer unique pour révéler/masquer les blocs marqués data-reveal
+  const { active, setActive } = useSection();
+  const SECTION_IDS = useMemo(() => ([
+    "accueil","construction","renovation","depannage","hivernage","entretien","terrasses","nos-realisations","contact"
+  ]), []);
+
+  // À l'arrivée, si un hash existe, l'utiliser
   useEffect(() => {
-    // Récupération de toutes les cibles (plus précis qu'observer la SECTION entière)
-    const targets = Array.from(document.querySelectorAll("[data-reveal]")); // Sélecteur attribut
+    const id = typeof window !== 'undefined' ? window.location.hash.replace('#','') : '';
+    if (id && SECTION_IDS.includes(id)) setActive(id);
+  }, [SECTION_IDS, setActive]);
 
-    // État initial (caché) + transition douce
-    targets.forEach((el) => { // Pour chaque bloc ciblé
-      el.classList.add("reveal-base"); // Pose l'état initial (opacity 0 + translate + blur)
-    });
-
-    // IntersectionObserver configuré pour déclencher un peu avant le centre
-    const io = new IntersectionObserver(
-      (entries) => { // Callback à chaque changement de visibilité
-        entries.forEach((entry) => { // Pour chaque élément observé
-          if (entry.isIntersecting) { // Si visible
-            entry.target.classList.remove("reveal-out"); // Retire une éventuelle anim de sortie
-            entry.target.classList.add("reveal-in");     // Lance l'anim d'entrée
-          } else { // Si non visible
-            // On lance une sortie uniquement si l'élément a déjà été "in"
-            if (entry.target.classList.contains("reveal-in")) { // Évite de "sortir" avant la première entrée
-              entry.target.classList.remove("reveal-in"); // Retire anim d'entrée
-              entry.target.classList.add("reveal-out");   // Lance anim de sortie
-            }
-          }
-        });
-      },
-      { root: null, rootMargin: "-20% 0px -25% 0px", threshold: 0 } // Fenêtre de déclenchement
-    );
-
-    // Démarre l'observation sur chaque cible
-    targets.forEach((el) => io.observe(el)); // Observe tous les blocs
-
-    // Nettoyage à l'unmount
-    return () => io.disconnect(); // Coupe l'observer proprement
-  }, []); // Une seule fois au montage
+  // Variants d'émergence (sortie de l'eau)
+  const emerge = {
+    initial: { opacity: 0, filter: "blur(8px)", y: 24, scale: 0.99 },
+    animate: { opacity: 1, filter: "blur(0px)", y: 0, scale: 1, transition: { duration: 0.45, ease: [0.44,0.95,0.6,1.15] } },
+    exit:    { opacity: 0, filter: "blur(6px)", y: -16, scale: 0.995, transition: { duration: 0.32, ease: [0.44,0.95,0.6,1.15] } },
+  };
 
   // Rendu principal
   return (
@@ -65,134 +49,98 @@ export default function Page() {
         <MobileNavBar />
       </div>
 
-      <main className="w-full scroll-smooth relative"> {/* Conteneur principal */}
+      <main className="w-full relative"> {/* Conteneur principal (scroll page désactivé via layout) */}
 
-        {/* Bulle WhatsApp flottante qui se cache dans la section contact */}
+        {/* Bulle WhatsApp flottante */}
         <WhatsAppBubble hideOnContact={true} />
 
-        {/* ====== ACCUEIL ====== */}
-        <section
-          id="accueil"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2 flex-1 pt-[90px] px-4 items-center justify-center" data-reveal>
-            <div className="flex flex-col justify-center">                  {/* Colonne texte */}
-              <h1 className="text-3xl md:text-5xl font-bold leading-tight"> {/* Titre */}
-                GHN Group – Piscines & Extérieurs d'Exception               {/* Libellé */}
-              </h1>
-              <p className="mt-4 text-base md:text-lg text-gray-700">       {/* Accroche */}
-                Imaginez la piscine idéale, parfaitement intégrée à votre jardin. Projets sur mesure, du bassin familial au couloir de nage, en passant par la piscine miroir.
-              </p>
-              <ul className="mt-6 space-y-2 text-gray-700">                 {/* Points clés */}
-                <li>Étude de faisabilité sur site</li>                      {/* Item */}
-                <li>Accompagnement administratif</li>                       {/* Item */}
-                <li>Matériaux haut de gamme & finitions soignées</li>       {/* Item */}
-              </ul>
-            </div>
-
-            {/* Image logo de l'entreprise */}
-            <div className="flex items-center justify-center w-full max-w-full">
-              <img 
-                src="/img/logo adam fini (2).png" 
-                alt="Logo GHN Group - Piscines & Extérieurs" 
-                className="w-full h-auto max-w-full max-h-full object-contain p-4"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* ====== CONSTRUCTION ====== */}
-        <section
-          id="construction"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>                 {/* Bloc révélé */}
-            <ModernConstructionSection />                                     {/* Section détaillée */}
-          </div>
-        </section>
-
-        {/* ====== RÉNOVATION ====== */}
-        <section
-          id="renovation"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <ModernRenovationSection />
-          </div>
-        </section>
-
-        {/* ====== DÉPANNAGE ====== */}
-        <section
-          id="depannage"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <ModernDepannageSection />
-          </div>
-        </section>
-
-        {/* ====== HIVERNAGE ====== */}
-        <section
-          id="hivernage"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <ModernHivernageSection />
-          </div>
-        </section>
-
-        {/* ====== ENTRETIEN ====== */}
-        <section
-          id="entretien"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <ModernEntretienSection />
-          </div>
-        </section>
-
-        {/* ====== TERRASSES ====== */}
-        <section
-          id="terrasses"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <ModernTerrassesSection />
-          </div>
-        </section>
-
-        {/* ====== NOS RÉALISATIONS ====== */}
-        <section
-          id="nos-realisations"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <div className="w-full">
-              <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
-              <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
-              <RealisationsCarousel />
-            </div>
-          </div>
-        </section>
-
-        {/* ====== CONTACT ====== */}
-        <section
-          id="contact"
-          className="min-h-screen flex flex-col w-full relative overflow-hidden"
-        >
-
-          <div className="relative z-10 mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
-            <InteractiveContact />
-          </div>
-        </section>
+        {/* Stage plein écran: une section visible à la fois, transitions d'émergence */}
+        <div className="relative w-full min-h-screen overflow-hidden">
+          <AnimatePresence mode="wait">
+            {active === "accueil" && (
+              <motion.section key="accueil" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2 flex-1 pt-[90px] px-4 items-center justify-center" data-reveal>
+                  <div className="flex flex-col justify-center">
+                    <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+                      GHN Group – Piscines & Extérieurs d'Exception
+                    </h1>
+                    <p className="mt-4 text-base md:text-lg text-gray-700">
+                      Imaginez la piscine idéale, parfaitement intégrée à votre jardin. Projets sur mesure, du bassin familial au couloir de nage, en passant par la piscine miroir.
+                    </p>
+                    <ul className="mt-6 space-y-2 text-gray-700">
+                      <li>Étude de faisabilité sur site</li>
+                      <li>Accompagnement administratif</li>
+                      <li>Matériaux haut de gamme & finitions soignées</li>
+                    </ul>
+                  </div>
+                  <div className="flex items-center justify-center w-full max-w-full">
+                    <img src="/img/logo adam fini (2).png" alt="Logo GHN Group - Piscines & Extérieurs" className="w-full h-auto max-w-full max-h-full object-contain p-4" />
+                  </div>
+                </div>
+              </motion.section>
+            )}
+            {active === "construction" && (
+              <motion.section key="construction" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernConstructionSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "renovation" && (
+              <motion.section key="renovation" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernRenovationSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "depannage" && (
+              <motion.section key="depannage" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernDepannageSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "hivernage" && (
+              <motion.section key="hivernage" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernHivernageSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "entretien" && (
+              <motion.section key="entretien" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernEntretienSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "terrasses" && (
+              <motion.section key="terrasses" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <ModernTerrassesSection />
+                </div>
+              </motion.section>
+            )}
+            {active === "nos-realisations" && (
+              <motion.section key="nos-realisations" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <div className="w-full">
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
+                    <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
+                    <RealisationsCarousel />
+                  </div>
+                </div>
+              </motion.section>
+            )}
+            {active === "contact" && (
+              <motion.section key="contact" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
+                <div className="relative z-10 mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
+                  <InteractiveContact />
+                </div>
+              </motion.section>
+            )}
+          </AnimatePresence>
+        </div>
       </main>
     </>
   );
