@@ -272,10 +272,11 @@ export default function NavBar() {
         {/* Logo */}
         <a
           href="#accueil"
-          className="relative z-10 text-2xl md:text-3xl font-extrabold text-[#009ee0] font-bebas select-none whitespace-nowrap"
+          className="relative z-10 text-[#009ee0] font-brand-serif select-none inline-flex flex-col items-center text-center ml-2 md:ml-3"
           onClick={(e) => { e.preventDefault(); selectIndex(Math.max(0, SECTION_IDS.indexOf("accueil"))); }}
         >
-          GHN-Pool
+          <span className="leading-none font-bold text-2xl md:text-3xl">GHN</span>
+          <span className="leading-none font-semibold text-[10px] md:text-xs tracking-[0.06em]">GROUP</span>
         </a>
 
         {/* Desktop menu */}

@@ -1,5 +1,9 @@
 /* Import des composants SCSS (doit être avant toute règle) */
+@use "./tools/fonts";
 @use "./components/Footer";
+
+/* Utilitaire pour la police du logo */
+.font-bebas { font-family: "Bebas", sans-serif; }
 
 /* === Animations reveal (entrée/sortie) === */
 @keyframes revealIn { /* Apparition douce */
@@ -35,3 +39,18 @@ body {
 }
 
 /* Styles composants (Footer, etc.) */
+
+/* Marque: style serif inspiré "Cradley Title" (système, sans fonte externe) */
+.font-brand-serif {
+  /* Didone/Transitional candidates si dispo, sinon fallback classiques */
+  font-family: "Didot", "Bodoni MT", "Bodoni 72", "Baskerville", "Garamond",
+               Cambria, Georgia, "Times New Roman", Times, serif;
+  font-weight: 700;                 /* plus gras */
+  text-transform: capitalize;        /* rendu en capitales */
+           /* tracking plus serré */
+                /* compact comme un titrage */
+  font-variant-ligatures: none;     /* éviter les ligatures stylisées */
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
