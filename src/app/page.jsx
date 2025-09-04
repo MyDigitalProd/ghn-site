@@ -270,32 +270,32 @@ function ModernRenovationSection() {
       <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
         Rafraîchissement partiel ou transformation complète : nous redonnons vie à votre bassin avec des solutions durables et esthétiques.
       </p>
-      <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+      <div className="flex flex-wrap justify-center gap-6">
+          <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Remplacement de revêtements", explications.revetements, <FaTools className="text-sky-500" />)}>
           <FaTools className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
             <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Remplacement de revêtements</h3>
             <p className="text-gray-600 text-center text-xs sm:text-sm">Liner, carrelage, PVC armé</p>
         </div>
-          <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+          <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Réparation de fuites & étanchéité", explications.fuites, <FaWater className="text-cyan-500" />)}>
           <FaWater className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
             <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Réparation de fuites & étanchéité</h3>
             <p className="text-gray-600 text-center text-xs sm:text-sm">Diagnostic et solutions durables</p>
         </div>
-          <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+          <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Modernisation", explications.modernisation, <FaCogs className="text-blue-400" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
             <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Modernisation</h3>
             <p className="text-gray-600 text-center text-xs sm:text-sm">Filtration, LED, chauffage, domotique</p>
         </div>
-          <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+          <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Refonte du bassin", explications.refonte, <FaHammer className="text-sky-500" />)}>
           <FaHammer className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
             <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Refonte du bassin</h3>
             <p className="text-gray-600 text-center text-xs sm:text-sm">Forme, profondeur, accès</p>
         </div>
-          <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+          <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Mise en conformité sécurité", explications.conformite, <FaShieldAlt className="text-cyan-500" />)}>
           <FaShieldAlt className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
             <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Mise en conformité sécurité</h3>
@@ -341,25 +341,25 @@ function ModernDepannageSection() {
         Une panne ne prévient jamais. Intervention rapide, diagnostic précis, réparations efficaces pour retrouver votre tranquillité.
       </p>
       <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2">
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Intervention rapide", explications.intervention, <FaCheckCircle className="text-sky-500" />)}>
           <FaCheckCircle className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Intervention rapide</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Sur site, sans délai</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Diagnostic & solutions sur mesure", explications.diagnostic, <FaCogs className="text-cyan-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Diagnostic & solutions sur mesure</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Analyse précise, réparation adaptée</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Réparations", explications.reparations, <FaTools className="text-blue-400" />)}>
           <FaTools className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Réparations</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Filtration, fuites, pompes, éclairage, etc.</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Suivi & conseils", explications.suivi, <FaLeaf className="text-cyan-500" />)}>
           <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Suivi & conseils</h3>
@@ -405,32 +405,32 @@ function ModernHivernageSection() {
       <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
         Protégez votre investissement : préparation minutieuse pour l'hiver et remise en service au printemps.
       </p>
-      <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+      <div className="flex flex-wrap justify-center gap-6">
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Protection du bassin", explications.protection, <FaShieldAlt className="text-cyan-500" />)}>
           <FaShieldAlt className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Protection du bassin</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Hivernage adapté & professionnel</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Traitement chimique hivernal", explications.traitement, <FaFlask className="text-blue-400" />)}>
           <FaFlask className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Traitement chimique hivernal</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Équilibre & stabilisation de l'eau</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Protection équipements", explications.equipements, <FaCogs className="text-sky-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Protection équipements</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Pompes, filtres, canalisations</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Installation couvertures", explications.couverture, <FaUmbrella className="text-cyan-500" />)}>
           <FaUmbrella className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Installation couvertures</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Accessoires d'hivernage</p>
         </div>
-  <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Remise en service", explications.remise, <FaPlay className="text-blue-400" />)}>
           <FaPlay className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Remise en service</h3>
@@ -476,32 +476,32 @@ function ModernEntretienSection() {
       <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
         Une eau cristalline toute l'année : entretien professionnel, nettoyage et équilibrage pour votre sérénité.
       </p>
-      <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+      <div className="flex flex-wrap justify-center gap-6">
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Entretien quotidien", explications.quotidien, <FaCheckCircle className="text-cyan-500" />)}>
           <FaCheckCircle className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Entretien quotidien</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Eau cristalline en permanence</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Nettoyage", explications.nettoyage, <FaBroom className="text-blue-400" />)}>
           <FaBroom className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Nettoyage</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Bassin, parois, fond</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Équilibrage chimique", explications.equilibre, <FaFlask className="text-sky-500" />)}>
           <FaFlask className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Équilibrage chimique</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">pH, chlore, alcalinité</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Maintenance équipements", explications.maintenance, <FaCogs className="text-cyan-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Maintenance équipements</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Prévention & performance</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
              onClick={() => handleOpenModal("Contrôles & optimisation", explications.controles, <FaClipboardCheck className="text-blue-400" />)}>
           <FaClipboardCheck className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Contrôles & optimisation</h3>
@@ -547,25 +547,25 @@ function ModernTerrassesSection() {
         Sublimez votre espace piscine : terrasses sur mesure, matériaux premium et aménagements paysagers.
       </p>
       <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2">
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Conception & réalisation", explications.conception, <FaRuler className="text-amber-500" />)}>
           <FaRuler className="text-2xl sm:text-3xl md:text-4xl text-amber-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Conception & réalisation</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Terrasses sur mesure</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Matériaux premium", explications.materiaux, <FaGem className="text-yellow-500" />)}>
           <FaGem className="text-2xl sm:text-3xl md:text-4xl text-yellow-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Matériaux premium</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Bois, composite, pierre, carrelage</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Aménagement paysager", explications.amenagement, <FaLeaf className="text-green-500" />)}>
           <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-green-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Aménagement paysager</h3>
           <p className="text-gray-600 text-center text-xs sm:text-sm">Espaces verts & éclairage</p>
         </div>
-        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[90px] sm:min-h-[100px]"
+        <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
              onClick={() => handleOpenModal("Entretien & rénovation", explications.entretien, <FaBroom className="text-amber-500" />)}>
           <FaBroom className="text-2xl sm:text-3xl md:text-4xl text-amber-500 mb-1" />
           <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Entretien & rénovation</h3>
