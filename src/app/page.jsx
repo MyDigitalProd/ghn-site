@@ -19,10 +19,12 @@ const RealisationsCarousel = dynamic(() => import("../components/RealisationsCar
 const RealisticWaveEffect = dynamic(() => import("../components/RealisticWaveEffect"), { ssr: false });
 import { useSection } from "@/components/SectionProvider";
 import { AnimatePresence, motion } from "framer-motion";
+import { useI18n } from "@/i18n/I18nProvider";
 
 // ----- Page one-page GHN -----
 export default function Page() {
   const { active, setActive } = useSection();
+  const { t } = useI18n();
   const SECTION_IDS = useMemo(() => ([
     "accueil","construction","renovation","depannage","hivernage","entretien","terrasses","nos-realisations","contact"
   ]), []);
@@ -63,15 +65,15 @@ export default function Page() {
                 <div className="relative z-10 mx-auto w-full max-w-7xl grid gap-6 md:grid-cols-2 flex-1 pt-[90px] px-4 items-center justify-center" data-reveal>
                   <div className="flex flex-col justify-center">
                     <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-                      GHN Group – Piscines & Extérieurs d'Exception
+                      {t("hero.title")}
                     </h1>
                     <p className="mt-4 text-base md:text-lg text-gray-700">
-                      Imaginez la piscine idéale, parfaitement intégrée à votre jardin. Projets sur mesure, du bassin familial au couloir de nage, en passant par la piscine miroir.
+                      {t("hero.lead")}
                     </p>
                     <ul className="mt-6 space-y-2 text-gray-700">
-                      <li>Étude de faisabilité sur site</li>
-                      <li>Accompagnement administratif</li>
-                      <li>Matériaux haut de gamme & finitions soignées</li>
+                      <li>{t("hero.bullets.0")}</li>
+                      <li>{t("hero.bullets.1")}</li>
+                      <li>{t("hero.bullets.2")}</li>
                     </ul>
                   </div>
                   <div className="flex items-center justify-center w-full max-w-full">
@@ -126,8 +128,8 @@ export default function Page() {
               <motion.section key="nos-realisations" variants={emerge} initial="initial" animate="animate" exit="exit" className="absolute inset-0 flex flex-col w-full overflow-auto">
                 <div className="relative z-10 max-w-5xl mx-auto w-full flex-1 pt-[90px] px-4 flex items-center justify-center" data-reveal>
                   <div className="w-full">
-                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">Nos Réalisations</h2>
-                    <p className="text-center text-lg mb-8 text-gray-700">Découvrez quelques-unes de nos réalisations : piscines, entretien, hivernage et aménagements sur mesure.</p>
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-[#009ee0]">{t("section.realisations.title")}</h2>
+                    <p className="text-center text-lg mb-8 text-gray-700">{t("section.realisations.desc")}</p>
                     <RealisationsCarousel />
                   </div>
                 </div>
@@ -149,6 +151,7 @@ export default function Page() {
 
 // ----- Section Construction (client, simple carterie) -----
 function ModernConstructionSection() {
+  const { t } = useI18n();
   const ref = useRef(null);                    // Référence (utile si tu veux des anim locales)
   useEffect(() => { /* hook réservé si besoin futur */ }, []); // Pas d'observer doublon ici
 
@@ -165,69 +168,67 @@ function ModernConstructionSection() {
   };
   const handleCloseModal = () => setModalOpen(false);
 
-  // Textes explicatifs (à adapter pour chaque carte)
+  // Textes explicatifs (localisés via i18n)
   const explications = {
-    faisabilite: `Nos experts se déplacent sur place pour analyser la configuration de votre terrain et étudier les meilleures options d’implantation. Terrain rocheux, en pente, ou restreint, chaque contrainte devient une opportunité d'optimisation. Nous garantissons une intégration harmonieuse et durable de votre piscine grâce à une étude approfondie des sols et des accès. GHN Group vous accompagne dans les démarches administratives pour une réalisation sereine et conforme aux réglementations locales.`,
-    construction: `La construction débute par le terrassement et la préparation du sol, puis la mise en place de la structure de votre piscine. Le système de filtration, les équipements techniques et les finitions (margelles, revêtements) sont installés avec soin. Nous veillons à ce que chaque détail contribue à créer un espace à la fois esthétique et fonctionnel. Les aménagements paysagers viennent parfaire l’ensemble, transformant votre jardin en un véritable havre de paix.`,
-    personnalise: `Quelle que soit la configuration de votre terrain, GHN Group trouve la solution idéale pour une intégration harmonieuse avec votre maison et votre jardin. Chaque choix est guidé par trois priorités : l’esthétique, la facilité d’utilisation et le confort. Nous sélectionnons des matériaux haut de gamme, intégrons harmonieusement la végétation, et proposons des solutions d’éclairage pour une ambiance chaleureuse. Nous optimisons l’ensoleillement et éloignons le bassin des arbres pour minimiser l’entretien. Avec GHN Group, votre projet de piscine sur mesure devient une réalité, alliant savoir-faire technique et accompagnement personnalisé.`
+    faisabilite: t("construction.modal.faisabilite"),
+    construction: t("construction.modal.construction"),
+    personnalise: t("construction.modal.personnalise")
   };
 
   return (
     <div ref={ref} className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <h2 className="text-xl sm:text-2xl md:text-4xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-3 sm:mb-4 text-center justify-center">
         <FaDraftingCompass className="text-2xl sm:text-3xl text-sky-500" />
-        <span className="leading-tight">Construction de Piscine : Étapes & Conseils</span>
+        <span className="leading-tight">{t("construction.title")}</span>
       </h2>
-      <p className="mt-3 sm:mt-4 text-gray-700 text-base sm:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8 px-2">
-        Créer un équilibre parfait entre votre jardin et votre piscine. Chaque projet est unique et conçu sur mesure : formes variées, débordement, couloir de nage, piscine miroir.
-      </p>
+      <p className="mt-3 sm:mt-4 text-gray-700 text-base sm:text-lg text-center max-w-3xl mx-auto mb-6 sm:mb-8 px-2">{t("construction.desc")}</p>
       <div className="flex flex-col lg:flex-row gap-4 sm:gap-5 md:gap-6 max-w-7xl mx-auto">
         {/* Card 1 - Étude de faisabilité */}
         <div
           className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-white/95 shadow-2xl border border-sky-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
-          onClick={() => handleOpenModal("Étude de faisabilité", explications.faisabilite, <FaClipboardCheck className="text-sky-500" />)}
+          onClick={() => handleOpenModal(t("construction.card1.title"), explications.faisabilite, <FaClipboardCheck className="text-sky-500" />)}
         >
           <div className="text-center mb-4">
             <FaClipboardCheck className="text-3xl sm:text-4xl text-sky-500 mx-auto mb-3" />
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">Étude de faisabilité</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">{t("construction.card1.title")}</h3>
           </div>
           <div className="space-y-3 flex-1">
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Analyse complète du terrain</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Implantation optimale</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Gestion des contraintes</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">Démarches administratives</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card1.bullets.0")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card1.bullets.1")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card1.bullets.2")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-sky-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card1.bullets.3")}</span></div>
           </div>
         </div>
         {/* Card 2 - Étapes de construction */}
         <div
           className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-gradient-to-br from-sky-400 to-cyan-400 text-white shadow-2xl flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
-          onClick={() => handleOpenModal("Étapes de construction", explications.construction, <FaHammer className="text-cyan-500" />)}
+          onClick={() => handleOpenModal(t("construction.card2.title"), explications.construction, <FaHammer className="text-cyan-500" />)}
         >
           <div className="text-center mb-4">
             <FaHammer className="text-3xl sm:text-4xl text-white mx-auto mb-3" />
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-white">Étapes de construction</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-white">{t("construction.card2.title")}</h3>
           </div>
           <div className="space-y-3 flex-1">
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Terrassement professionnel</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Structure béton armé</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Filtration & équipements</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">Finitions & aménagement paysager</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">{t("construction.card2.bullets.0")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">{t("construction.card2.bullets.1")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">{t("construction.card2.bullets.2")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-white text-sm drop-shadow flex-shrink-0" /><span className="text-white/95">{t("construction.card2.bullets.3")}</span></div>
           </div>
         </div>
         {/* Card 3 - Projet personnalisé */}
         <div
           className="flex-1 p-4 sm:p-5 md:p-6 lg:p-8 rounded-2xl bg-white/95 shadow-2xl border border-cyan-100 flex flex-col justify-between hover:scale-105 transition-all duration-300 cursor-pointer min-h-[200px] lg:min-h-[280px]"
-          onClick={() => handleOpenModal("Projet personnalisé", explications.personnalise, <FaPalette className="text-cyan-500" />)}
+          onClick={() => handleOpenModal(t("construction.card3.title"), explications.personnalise, <FaPalette className="text-cyan-500" />)}
         >
           <div className="text-center mb-4">
             <FaPalette className="text-3xl sm:text-4xl text-cyan-500 mx-auto mb-3" />
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">Projet personnalisé</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-3 text-gray-800">{t("construction.card3.title")}</h3>
           </div>
           <div className="space-y-3 flex-1">
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Design sur mesure esthétique</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Facilité d'utilisation optimale</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Matériaux haut de gamme</span></div>
-            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">Éclairage LED intégré</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card3.bullets.0")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card3.bullets.1")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card3.bullets.2")}</span></div>
+            <div className="flex items-center gap-3"><FaCheckCircle className="text-cyan-400 text-sm flex-shrink-0" /><span className="text-gray-700">{t("construction.card3.bullets.3")}</span></div>
           </div>
         </div>
       </div>
@@ -241,6 +242,7 @@ function ModernConstructionSection() {
 
 // ----- Section Rénovation -----
 function ModernRenovationSection() {
+  const { t } = useI18n();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("");
   const [modalContent, setModalContent] = React.useState("");
@@ -255,52 +257,50 @@ function ModernRenovationSection() {
   const handleCloseModal = () => setModalOpen(false);
 
   const explications = {
-    revetements: `Chez GHN Group, nous redonnons vie à votre piscine grâce à notre expertise en rénovation sur mesure. Qu'il s'agisse d'un simple rafraîchissement ou d'une transformation complète, notre équipe vous accompagne à chaque étape avec professionnalisme et écoute. Le remplacement de revêtements (liner, carrelage, PVC armé) permet de renouveler totalement l'aspect de votre bassin.`,
-    fuites: `La réparation de fuites et le traitement des problèmes d'étanchéité sont essentiels pour préserver votre piscine. Nos experts diagnostiquent précisément l'origine des problèmes et appliquent des solutions durables pour garantir l'étanchéité parfaite de votre bassin.`,
-    modernisation: `La modernisation des systèmes (filtration, éclairage LED, chauffage, domotique) transforme votre piscine en un espace moderne et économe en énergie. Nous intégrons les dernières technologies pour améliorer le confort et réduire les coûts d'exploitation.`,
-    refonte: `La refonte du bassin permet de modifier la forme, la profondeur ou les accès selon vos nouveaux besoins. Cette transformation majeure redonne une seconde vie à votre piscine en l'adaptant parfaitement à vos attentes actuelles.`,
-    conformite: `La mise en conformité avec les normes de sécurité en vigueur est indispensable. Nous nous chargeons de tous les aspects réglementaires pour que votre piscine respecte les standards de sécurité les plus récents.`
+    revetements: t("renovation.modal.revetements"),
+    fuites: t("renovation.modal.fuites"),
+    modernisation: t("renovation.modal.modernisation"),
+    refonte: t("renovation.modal.refonte"),
+    conformite: t("renovation.modal.conformite")
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
       <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
         <FaRedo className="text-cyan-500 text-3xl sm:text-4xl md:text-5xl" />
-        Rénovation de Piscine
+        {t("renovation.title")}
       </h2>
-      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
-        Rafraîchissement partiel ou transformation complète : nous redonnons vie à votre bassin avec des solutions durables et esthétiques.
-      </p>
+      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">{t("renovation.desc")}</p>
       <div className="flex flex-wrap justify-center gap-6">
           <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Remplacement de revêtements", explications.revetements, <FaTools className="text-sky-500" />)}>
+             onClick={() => handleOpenModal(t("renovation.cards.revetements.title"), explications.revetements, <FaTools className="text-sky-500" />)}>
           <FaTools className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
-            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Remplacement de revêtements</h3>
-            <p className="text-gray-600 text-center text-xs sm:text-sm">Liner, carrelage, PVC armé</p>
+            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("renovation.cards.revetements.title")}</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm">{t("renovation.cards.revetements.subtitle")}</p>
         </div>
           <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Réparation de fuites & étanchéité", explications.fuites, <FaWater className="text-cyan-500" />)}>
+             onClick={() => handleOpenModal(t("renovation.cards.fuites.title"), explications.fuites, <FaWater className="text-cyan-500" />)}>
           <FaWater className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Réparation de fuites & étanchéité</h3>
-            <p className="text-gray-600 text-center text-xs sm:text-sm">Diagnostic et solutions durables</p>
+            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("renovation.cards.fuites.title")}</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm">{t("renovation.cards.fuites.subtitle")}</p>
         </div>
           <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Modernisation", explications.modernisation, <FaCogs className="text-blue-400" />)}>
+             onClick={() => handleOpenModal(t("renovation.cards.modernisation.title"), explications.modernisation, <FaCogs className="text-blue-400" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Modernisation</h3>
-            <p className="text-gray-600 text-center text-xs sm:text-sm">Filtration, LED, chauffage, domotique</p>
+            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("renovation.cards.modernisation.title")}</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm">{t("renovation.cards.modernisation.subtitle")}</p>
         </div>
           <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Refonte du bassin", explications.refonte, <FaHammer className="text-sky-500" />)}>
+             onClick={() => handleOpenModal(t("renovation.cards.refonte.title"), explications.refonte, <FaHammer className="text-sky-500" />)}>
           <FaHammer className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
-            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Refonte du bassin</h3>
-            <p className="text-gray-600 text-center text-xs sm:text-sm">Forme, profondeur, accès</p>
+            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("renovation.cards.refonte.title")}</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm">{t("renovation.cards.refonte.subtitle")}</p>
         </div>
           <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Mise en conformité sécurité", explications.conformite, <FaShieldAlt className="text-cyan-500" />)}>
+             onClick={() => handleOpenModal(t("renovation.cards.conformite.title"), explications.conformite, <FaShieldAlt className="text-cyan-500" />)}>
           <FaShieldAlt className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Mise en conformité sécurité</h3>
-            <p className="text-gray-600 text-center text-xs sm:text-sm">Sécurité et normes actualisées</p>
+            <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("renovation.cards.conformite.title")}</h3>
+            <p className="text-gray-600 text-center text-xs sm:text-sm">{t("renovation.cards.conformite.subtitle")}</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -312,6 +312,7 @@ function ModernRenovationSection() {
 
 // ----- Section Dépannage -----
 function ModernDepannageSection() {
+  const { t } = useI18n();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("");
   const [modalContent, setModalContent] = React.useState("");
@@ -326,45 +327,43 @@ function ModernDepannageSection() {
   const handleCloseModal = () => setModalOpen(false);
 
   const explications = {
-    intervention: `Une panne ne prévient jamais. Chez GHN Group, nous savons qu'un problème technique peut vite compromettre le bon fonctionnement de votre piscine. C'est pourquoi nous mettons un point d'honneur à intervenir rapidement et efficacement, pour que vous puissiez retrouver votre tranquillité sans attendre. Notre équipe est à votre écoute et prête à agir avec professionnalisme et réactivité.`,
-    diagnostic: `Nous proposons un diagnostic précis et des solutions sur mesure pour chaque problème rencontré. Notre expertise nous permet d'identifier rapidement l'origine des dysfonctionnements et de proposer la réparation la plus adaptée à votre situation.`,
-    reparations: `Nos interventions couvrent tous les aspects techniques : réparation de systèmes de filtration, fuites, pompes, éclairage, etc. Nous disposons de l'équipement et du savoir-faire nécessaires pour résoudre efficacement tous types de pannes.`,
-    suivi: `GHN Group assure un suivi professionnel et vous prodigue des conseils pour éviter les récidives. Nous vous accompagnons même après la réparation pour garantir le bon fonctionnement durable de votre installation.`
+    intervention: t("depannage.modal.intervention"),
+    diagnostic: t("depannage.modal.diagnostic"),
+    reparations: t("depannage.modal.reparations"),
+    suivi: t("depannage.modal.suivi")
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
+    <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
         <FaWrench className="text-blue-400 text-3xl sm:text-4xl md:text-5xl" />
-        Dépannage Piscine
+      {t("depannage.title")}
       </h2>
-      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
-        Une panne ne prévient jamais. Intervention rapide, diagnostic précis, réparations efficaces pour retrouver votre tranquillité.
-      </p>
+    <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">{t("depannage.desc")}</p>
       <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2">
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Intervention rapide", explications.intervention, <FaCheckCircle className="text-sky-500" />)}>
+         onClick={() => handleOpenModal(t("depannage.cards.intervention.title"), explications.intervention, <FaCheckCircle className="text-sky-500" />)}>
           <FaCheckCircle className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Intervention rapide</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Sur site, sans délai</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("depannage.cards.intervention.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("depannage.cards.intervention.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Diagnostic & solutions sur mesure", explications.diagnostic, <FaCogs className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("depannage.cards.diagnostic.title"), explications.diagnostic, <FaCogs className="text-cyan-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Diagnostic & solutions sur mesure</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Analyse précise, réparation adaptée</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("depannage.cards.diagnostic.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("depannage.cards.diagnostic.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Réparations", explications.reparations, <FaTools className="text-blue-400" />)}>
+         onClick={() => handleOpenModal(t("depannage.cards.reparations.title"), explications.reparations, <FaTools className="text-blue-400" />)}>
           <FaTools className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Réparations</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Filtration, fuites, pompes, éclairage, etc.</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("depannage.cards.reparations.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("depannage.cards.reparations.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Suivi & conseils", explications.suivi, <FaLeaf className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("depannage.cards.suivi.title"), explications.suivi, <FaLeaf className="text-cyan-500" />)}>
           <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Suivi & conseils</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Accompagnement post-réparation</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("depannage.cards.suivi.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("depannage.cards.suivi.subtitle")}</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -376,6 +375,7 @@ function ModernDepannageSection() {
 
 // ----- Section Hivernage -----
 function ModernHivernageSection() {
+  const { t } = useI18n();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("");
   const [modalContent, setModalContent] = React.useState("");
@@ -390,52 +390,50 @@ function ModernHivernageSection() {
   const handleCloseModal = () => setModalOpen(false);
 
   const explications = {
-    protection: `L'hivernage protège votre investissement. Chez GHN Group, nous savons que bien préparer sa piscine pour l'hiver est essentiel pour préserver sa durée de vie et faciliter sa remise en service au printemps. Nos solutions d'hivernage sont adaptées aux spécificités de votre bassin et aux conditions climatiques locales.`,
-    traitement: `Le traitement chimique hivernal stabilise l'eau et empêche la prolifération d'algues et de bactéries pendant la période d'arrêt. Nous utilisons des produits spécialisés pour maintenir un équilibre optimal même en période de non-utilisation.`,
-    equipements: `La protection des équipements (pompes, filtres, canalisations) contre le gel est cruciale pour éviter les dégâts coûteux. Nous nous chargeons de la vidange et de la protection de tous les éléments sensibles de votre installation.`,
-    couverture: `L'installation de couvertures et accessoires d'hivernage protège efficacement votre bassin des impuretés et facilite la remise en service. Nous proposons différents types de couvertures adaptées à vos besoins et à votre budget.`,
-    remise: `Au printemps, nous assurons la remise en service complète de votre piscine. Cette prestation inclut le retrait des équipements d'hivernage, la vérification de tous les systèmes et la remise en route progressive pour retrouver une eau cristalline.`
+    protection: t("hivernage.modal.protection"),
+    traitement: t("hivernage.modal.traitement"),
+    equipements: t("hivernage.modal.equipements"),
+    couverture: t("hivernage.modal.couverture"),
+    remise: t("hivernage.modal.remise")
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
   <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 sm:mb-3 text-center justify-center mb-7">
         <FaSnowflake className="text-cyan-500 text-3xl sm:text-4xl md:text-5xl" />
-        Hivernage Piscine
+      {t("hivernage.title")}
       </h2>
-      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
-        Protégez votre investissement : préparation minutieuse pour l'hiver et remise en service au printemps.
-      </p>
+    <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">{t("hivernage.desc")}</p>
       <div className="flex flex-wrap justify-center gap-6">
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Protection du bassin", explications.protection, <FaShieldAlt className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("hivernage.cards.protection.title"), explications.protection, <FaShieldAlt className="text-cyan-500" />)}>
           <FaShieldAlt className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Protection du bassin</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Hivernage adapté & professionnel</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("hivernage.cards.protection.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("hivernage.cards.protection.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Traitement chimique hivernal", explications.traitement, <FaFlask className="text-blue-400" />)}>
+         onClick={() => handleOpenModal(t("hivernage.cards.traitement.title"), explications.traitement, <FaFlask className="text-blue-400" />)}>
           <FaFlask className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Traitement chimique hivernal</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Équilibre & stabilisation de l'eau</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("hivernage.cards.traitement.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("hivernage.cards.traitement.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Protection équipements", explications.equipements, <FaCogs className="text-sky-500" />)}>
+         onClick={() => handleOpenModal(t("hivernage.cards.equipements.title"), explications.equipements, <FaCogs className="text-sky-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Protection équipements</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Pompes, filtres, canalisations</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("hivernage.cards.equipements.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("hivernage.cards.equipements.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Installation couvertures", explications.couverture, <FaUmbrella className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("hivernage.cards.couverture.title"), explications.couverture, <FaUmbrella className="text-cyan-500" />)}>
           <FaUmbrella className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Installation couvertures</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Accessoires d'hivernage</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("hivernage.cards.couverture.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("hivernage.cards.couverture.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Remise en service", explications.remise, <FaPlay className="text-blue-400" />)}>
+         onClick={() => handleOpenModal(t("hivernage.cards.remise.title"), explications.remise, <FaPlay className="text-blue-400" />)}>
           <FaPlay className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Remise en service</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Retour printemps</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("hivernage.cards.remise.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("hivernage.cards.remise.subtitle")}</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -447,6 +445,7 @@ function ModernHivernageSection() {
 
 // ----- Section Entretien -----
 function ModernEntretienSection() {
+  const { t } = useI18n();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("");
   const [modalContent, setModalContent] = React.useState("");
@@ -461,52 +460,50 @@ function ModernEntretienSection() {
   const handleCloseModal = () => setModalOpen(false);
 
   const explications = {
-    quotidien: `L'entretien quotidien assure une eau cristalline en permanence. Chez GHN Group, nous savons qu'une piscine bien entretenue procure un plaisir de baignade optimal et préserve la durée de vie de vos équipements. Notre service d'entretien régulier vous libère de toutes les contraintes techniques.`,
-    nettoyage: `Le nettoyage du bassin, parois et fond, élimine efficacement les impuretés et dépôts. Notre équipe utilise des techniques et équipements professionnels pour maintenir votre piscine dans un état impeccable en toutes circonstances.`,
-    equilibre: `L'équilibrage chimique de l'eau garantit une baignade saine et agréable. Nous contrôlons et ajustons régulièrement tous les paramètres (pH, chlore, alcalinité) pour maintenir une qualité d'eau optimale selon les normes en vigueur.`,
-    maintenance: `La maintenance des équipements prévient les pannes et optimise les performances. Nos interventions programmées incluent la vérification, le nettoyage et l'entretien de tous les systèmes pour assurer leur bon fonctionnement.`,
-    controles: `Les contrôles réguliers et conseils d'optimisation permettent d'anticiper les besoins et d'améliorer l'efficacité de votre installation. Nous vous proposons des solutions personnalisées pour réduire vos coûts d'exploitation.`
+    quotidien: t("entretien.modal.quotidien"),
+    nettoyage: t("entretien.modal.nettoyage"),
+    equilibre: t("entretien.modal.equilibre"),
+    maintenance: t("entretien.modal.maintenance"),
+    controles: t("entretien.modal.controles")
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
+    <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
         <FaBroom className="text-blue-400 text-3xl sm:text-4xl md:text-5xl" />
-        Entretien Piscine
+      {t("entretien.title")}
       </h2>
-      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
-        Une eau cristalline toute l'année : entretien professionnel, nettoyage et équilibrage pour votre sérénité.
-      </p>
+    <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">{t("entretien.desc")}</p>
       <div className="flex flex-wrap justify-center gap-6">
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Entretien quotidien", explications.quotidien, <FaCheckCircle className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("entretien.cards.quotidien.title"), explications.quotidien, <FaCheckCircle className="text-cyan-500" />)}>
           <FaCheckCircle className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Entretien quotidien</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Eau cristalline en permanence</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("entretien.cards.quotidien.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("entretien.cards.quotidien.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Nettoyage", explications.nettoyage, <FaBroom className="text-blue-400" />)}>
+         onClick={() => handleOpenModal(t("entretien.cards.nettoyage.title"), explications.nettoyage, <FaBroom className="text-blue-400" />)}>
           <FaBroom className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Nettoyage</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Bassin, parois, fond</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("entretien.cards.nettoyage.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("entretien.cards.nettoyage.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Équilibrage chimique", explications.equilibre, <FaFlask className="text-sky-500" />)}>
+         onClick={() => handleOpenModal(t("entretien.cards.equilibre.title"), explications.equilibre, <FaFlask className="text-sky-500" />)}>
           <FaFlask className="text-2xl sm:text-3xl md:text-4xl text-sky-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Équilibrage chimique</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">pH, chlore, alcalinité</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("entretien.cards.equilibre.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("entretien.cards.equilibre.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Maintenance équipements", explications.maintenance, <FaCogs className="text-cyan-500" />)}>
+         onClick={() => handleOpenModal(t("entretien.cards.maintenance.title"), explications.maintenance, <FaCogs className="text-cyan-500" />)}>
           <FaCogs className="text-2xl sm:text-3xl md:text-4xl text-cyan-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Maintenance équipements</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Prévention & performance</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("entretien.cards.maintenance.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("entretien.cards.maintenance.subtitle")}</p>
         </div>
         <div className="basis-[300px] max-w-full h-[160px] p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300"
-             onClick={() => handleOpenModal("Contrôles & optimisation", explications.controles, <FaClipboardCheck className="text-blue-400" />)}>
+         onClick={() => handleOpenModal(t("entretien.cards.controles.title"), explications.controles, <FaClipboardCheck className="text-blue-400" />)}>
           <FaClipboardCheck className="text-2xl sm:text-3xl md:text-4xl text-blue-400 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Contrôles & optimisation</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Conseils d'experts</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("entretien.cards.controles.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("entretien.cards.controles.subtitle")}</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>
@@ -518,6 +515,7 @@ function ModernEntretienSection() {
 
 // ----- Section Terrasses -----
 function ModernTerrassesSection() {
+  const { t } = useI18n();
   const [modalOpen, setModalOpen] = React.useState(false);
   const [modalTitle, setModalTitle] = React.useState("");
   const [modalContent, setModalContent] = React.useState("");
@@ -532,45 +530,43 @@ function ModernTerrassesSection() {
   const handleCloseModal = () => setModalOpen(false);
 
   const explications = {
-    conception: `La conception et réalisation de terrasses transforment l'espace autour de votre piscine en véritable lieu de vie. Chez GHN Group, nous créons des terrasses sur mesure qui s'harmonisent parfaitement avec votre bassin et votre environnement, alliant esthétique et fonctionnalité.`,
-    materiaux: `Nous travaillons avec des matériaux premium : bois exotique, composite, pierre naturelle, carrelage antidérapant. Chaque matériau est sélectionné pour sa durabilité, sa résistance aux intempéries et son aspect esthétique, garantissant un résultat durable et élégant.`,
-    amenagement: `L'aménagement paysager intègre harmonieusement votre terrasse dans son environnement. Nous concevons des espaces verts, des éclairages d'ambiance et des solutions d'ombrage pour créer une atmosphère unique et relaxante autour de votre piscine.`,
-    entretien: `L'entretien et rénovation des terrasses existantes redonnent éclat et longévité à vos espaces extérieurs. Nos équipes interviennent pour le nettoyage, la réparation, le traitement et la protection de tous types de revêtements de terrasse.`
+    conception: t("terrasses.modal.conception"),
+    materiaux: t("terrasses.modal.materiaux"),
+    amenagement: t("terrasses.modal.amenagement"),
+    entretien: t("terrasses.modal.entretien")
   };
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-      <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
+    <h2 className="text-2xl sm:text-3xl md:text-5xl font-semibold flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-2 sm:mb-3 text-center justify-center">
         <FaClone className="text-amber-500 text-3xl sm:text-4xl md:text-5xl" />
-        Terrasses & Aménagements
+      {t("terrasses.title")}
       </h2>
-      <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">
-        Sublimez votre espace piscine : terrasses sur mesure, matériaux premium et aménagements paysagers.
-      </p>
+    <p className="mt-2 sm:mt-3 text-gray-700 text-sm sm:text-base md:text-lg text-center max-w-3xl mx-auto mb-15 sm:mb-4 px-2">{t("terrasses.desc")}</p>
       <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-1 md:grid-cols-2">
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Conception & réalisation", explications.conception, <FaRuler className="text-amber-500" />)}>
+         onClick={() => handleOpenModal(t("terrasses.cards.conception.title"), explications.conception, <FaRuler className="text-amber-500" />)}>
           <FaRuler className="text-2xl sm:text-3xl md:text-4xl text-amber-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Conception & réalisation</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Terrasses sur mesure</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("terrasses.cards.conception.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("terrasses.cards.conception.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Matériaux premium", explications.materiaux, <FaGem className="text-yellow-500" />)}>
+         onClick={() => handleOpenModal(t("terrasses.cards.materiaux.title"), explications.materiaux, <FaGem className="text-yellow-500" />)}>
           <FaGem className="text-2xl sm:text-3xl md:text-4xl text-yellow-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Matériaux premium</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Bois, composite, pierre, carrelage</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("terrasses.cards.materiaux.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("terrasses.cards.materiaux.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Aménagement paysager", explications.amenagement, <FaLeaf className="text-green-500" />)}>
+         onClick={() => handleOpenModal(t("terrasses.cards.amenagement.title"), explications.amenagement, <FaLeaf className="text-green-500" />)}>
           <FaLeaf className="text-2xl sm:text-3xl md:text-4xl text-green-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Aménagement paysager</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Espaces verts & éclairage</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("terrasses.cards.amenagement.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("terrasses.cards.amenagement.subtitle")}</p>
         </div>
         <div className="p-1.5 sm:p-2 md:p-3 rounded-xl bg-white/90 backdrop-blur shadow-lg flex flex-col items-center justify-center cursor-pointer hover:scale-105 transition-all duration-300 min-h-[120px] sm:min-h-[140px]"
-             onClick={() => handleOpenModal("Entretien & rénovation", explications.entretien, <FaBroom className="text-amber-500" />)}>
+         onClick={() => handleOpenModal(t("terrasses.cards.entretien.title"), explications.entretien, <FaBroom className="text-amber-500" />)}>
           <FaBroom className="text-2xl sm:text-3xl md:text-4xl text-amber-500 mb-1" />
-          <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">Entretien & rénovation</h3>
-          <p className="text-gray-600 text-center text-xs sm:text-sm">Nettoyage, réparation, protection</p>
+       <h3 className="font-bold text-base sm:text-lg md:text-xl mb-0.5 text-center">{t("terrasses.cards.entretien.title")}</h3>
+       <p className="text-gray-600 text-center text-xs sm:text-sm">{t("terrasses.cards.entretien.subtitle")}</p>
         </div>
       </div>
       <InfoModal open={modalOpen} onClose={handleCloseModal} title={modalTitle} icon={modalIcon}>

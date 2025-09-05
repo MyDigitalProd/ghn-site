@@ -4,16 +4,25 @@ import Header from "@/components/Header"; // En-tête global
 import Footer from "@/components/Footer"; // Pied de page global
 import RealisticWaveEffect from "@/components/RealisticWaveEffect"; // Vague globale fixe
 import { SectionProvider } from "@/components/SectionProvider";
+import { I18nProvider } from "@/i18n/I18nProvider";
 
 export const metadata = {
   title: "GHN Group — Piscines & Extérieurs d’Exception",
   description: "Construction, rénovation, entretien, hivernage et terrasses.",
+  alternates: {
+    languages: {
+      "fr": "/?lang=fr",
+      "nl": "/?lang=nl",
+      "en": "/?lang=en",
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-  <body>
+      <body>
+        <I18nProvider>
         {/* Fond global fixe: dégradé + vague discrète en haut */}
         <div className="fixed inset-0 -z-10 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50" />
@@ -29,13 +38,14 @@ export default function RootLayout({ children }) {
             />
           </div>
         </div>
-        <SectionProvider>
-          <Header />
-          <main className="relative min-h-screen overflow-hidden" style={{ height: '100dvh' }}>
-            {children}
-          </main>
-          <Footer />
-        </SectionProvider>
+          <SectionProvider>
+            <Header />
+            <main className="relative min-h-screen overflow-hidden" style={{ height: '100dvh' }}>
+              {children}
+            </main>
+            <Footer />
+          </SectionProvider>
+        </I18nProvider>
       </body>
     </html>
   );

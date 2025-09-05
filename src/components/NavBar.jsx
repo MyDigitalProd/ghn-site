@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSection } from "./SectionProvider";
+import { useI18n } from "@/i18n/I18nProvider";
 import { AnimatePresence, motion } from "framer-motion";
 
 /* Sections & labels */
@@ -17,6 +18,7 @@ const mod = (n, m) => ((n % m) + m) % m;
 
 export default function NavBar() {
   const { active: ctxActive, setActive: setCtxActive } = useSection();
+  const { t, lang, setLang } = useI18n();
   /* State */
   const [activeId, setActiveId]   = useState("accueil");
   const [pickerOpen, setOpen]     = useState(false);
@@ -300,7 +302,7 @@ export default function NavBar() {
                     onClick={(e) => { e.preventDefault(); setHovered(""); selectIndex(SECTION_IDS.indexOf(item)); }}
                     aria-current={isActive ? "page" : undefined}
                   >
-                    {LABELS[item]}
+                    {t(`nav.${item}`)}
                   </a>
                   <div 
                     className="nav-wave"
@@ -322,6 +324,20 @@ export default function NavBar() {
               );
             })}
           </ul>
+        </div>
+        {/* Lang switcher */}
+        <div className="relative z-10 flex items-center gap-1 ml-2">
+          {(["fr","nl","en"]).map(code => (
+            <button
+              key={code}
+              className={`px-2 py-1 rounded text-xs font-semibold border transition-colors ${lang===code?"bg-[#009ee0] text-white border-[#009ee0]":"bg-white/70 text-[#1567db] border-[#cfe8fb] hover:bg-white"}`}
+              onClick={() => setLang(code)}
+              aria-pressed={lang===code}
+              title={t(`lang.${code}`)}
+            >
+              {code.toUpperCase()}
+            </button>
+          ))}
         </div>
       </div>
     </nav>
