@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Image from "next/image";
+import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
 
 const categories = [
   { id: "all", label: "Toutes", color: "bg-gradient-to-r from-sky-500 to-cyan-500" },
@@ -111,11 +111,12 @@ export default function RealisationsCarousel() {
   const goToSlide = (i) => setCurrentIndex(i);
 
   return (
+    <LazyMotion features={domAnimation} strict>
     <div className="w-full max-w-5xl mx-auto px-2">
       {/* Filtres */}
       <div className="flex flex-wrap justify-center gap-3 mb-4">
         {categories.map((c) => (
-          <motion.button
+          <m.button
             key={c.id}
             onClick={() => { setSelectedCategory(c.id); setCurrentIndex(0); }}
             className={`px-4 py-2 rounded-full text-white font-medium transition-all duration-300 ${selectedCategory === c.id ? `${c.color} scale-105 shadow-lg` : "bg-gray-400 hover:bg-gray-500"}`}
@@ -123,7 +124,7 @@ export default function RealisationsCarousel() {
             whileTap={{ scale: 0.97 }}
           >
             {c.label}
-          </motion.button>
+          </m.button>
         ))}
       </div>
 
@@ -131,7 +132,7 @@ export default function RealisationsCarousel() {
       <div className="group relative overflow-hidden rounded-2xl bg-transparent">
         <div className="relative h-[36vh] md:h-[44vh] lg:h-[48vh] min-h-[260px] max-h-[520px]">
           <AnimatePresence mode="wait">
-            <motion.div
+            <m.div
               key={`${selectedCategory}-${currentIndex}`}
               initial={{ opacity: 0, x: 200 }}
               animate={{ opacity: 1, x: 0 }}
@@ -141,17 +142,21 @@ export default function RealisationsCarousel() {
             >
               <div className="relative h-full flex items-center justify-center">
                 {images.length > 0 ? (
-                  <img
-                    src={images[currentIndex]}
-                    alt={`Réalisation ${currentIndex + 1}`}
-                    className="max-w-[90%] max-h-[88%] object-contain rounded-2xl shadow-xl shadow-sky-300/50 will-change-transform img-float transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01]"
-                    loading="lazy"
-                  />
+                  <div className="relative w-[90%] h-[88%]">
+                    <Image
+                      src={images[currentIndex]}
+                      alt={`Réalisation ${currentIndex + 1}`}
+                      fill
+                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 70vw, 800px"
+                      className="object-contain rounded-2xl shadow-xl shadow-sky-300/50 will-change-transform img-float transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01]"
+                      priority={false}
+                    />
+                  </div>
                 ) : (
                   <div className="text-gray-600">Aucune image</div>
                 )}
               </div>
-            </motion.div>
+              </m.div>
           </AnimatePresence>
         </div>
 
@@ -159,10 +164,14 @@ export default function RealisationsCarousel() {
         {images.length > 1 && (
           <>
             <button onClick={goToPrev} aria-label="Précédent" className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
-              <FaChevronLeft />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
+                <path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+              </svg>
             </button>
             <button onClick={goToNext} aria-label="Suivant" className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
-              <FaChevronRight />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
+                <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
+              </svg>
             </button>
           </>
         )}
@@ -182,7 +191,7 @@ export default function RealisationsCarousel() {
         )}
       </div>
       {/* Animation flottante locale au composant */}
-      <style jsx>{`
+  <style jsx>{`
         @keyframes floatImg {
           0% { transform: translateY(0) scale(1); }
           50% { transform: translateY(-6px) scale(1.01); }
@@ -190,6 +199,7 @@ export default function RealisationsCarousel() {
         }
         .img-float { animation: floatImg 6s ease-in-out infinite; }
       `}</style>
-    </div>
+  </div>
+  </LazyMotion>
   );
 }

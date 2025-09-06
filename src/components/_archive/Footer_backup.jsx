@@ -1,7 +1,3 @@
-// ARCHIVÉ: ce composant a été déplacé dans _archive pour nettoyage.
-// Il est conservé ici uniquement comme proxy temporaire.
-export { default } from "./_archive/Footer_backup";
-
 // Import de l'icône Instagram depuis react-icons
 import { FaInstagram } from "react-icons/fa";
 

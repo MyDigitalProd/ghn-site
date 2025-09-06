@@ -1,3 +1,7 @@
+// ARCHIVÉ: ce composant a été déplacé dans _archive pour nettoyage.
+// Il est conservé ici uniquement comme proxy temporaire.
+export { default } from "./PS3WaveEffect";
+
 "use client";
 import { useEffect, useRef, useState } from "react";
 

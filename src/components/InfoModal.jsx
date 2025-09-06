@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { createPortal } from "react-dom";
 
@@ -47,8 +48,6 @@ export default function InfoModal({ open, onClose, title, icon, children }) {
     };
   }, [open]);
   
-  if (!mounted || (!open && !closing)) return null;
-
   // Animation de fermeture fluide
   const handleClose = () => {
     setClosing(true);
@@ -84,6 +83,9 @@ export default function InfoModal({ open, onClose, title, icon, children }) {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
+
+  // Après déclaration de tous les hooks: on peut court-circuiter le rendu
+  if (!mounted || (!open && !closing)) return null;
 
   const modalContent = (
     <div 

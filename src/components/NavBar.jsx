@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { useSection } from "./SectionProvider";
 import { useI18n } from "@/i18n/I18nProvider";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 
 /* Sections & labels */
 const SECTION_IDS = [
@@ -12,19 +13,23 @@ const SECTION_IDS = [
 const LABELS = {
   accueil:"Accueil", construction:"Construction", renovation:"Rénovation",
   depannage:"Dépannage", hivernage:"Hivernage", entretien:"Entretien",
-  terrasses:"Terrasses", "nos-realisations":"Nos Réalisations", contact:"Contact"
+  terrasses:"Terrasses", "nos-realisations":"Réalisations", contact:"Contact"
 };
 const mod = (n, m) => ((n % m) + m) % m;
 
 export default function NavBar() {
   const { active: ctxActive, setActive: setCtxActive } = useSection();
   const { t, lang, setLang } = useI18n();
+  const FLAG_SRC = { fr: "/img/flags/fr.svg", nl: "/img/flags/nl.svg", en: "/img/flags/gb.svg" };
+  const router = useRouter();
+  const pathname = usePathname();
   /* State */
   const [activeId, setActiveId]   = useState("accueil");
   const [pickerOpen, setOpen]     = useState(false);
   const [pickerIndex, setIndex]   = useState(0); // 0..N-1
   const [hovered, setHovered]     = useState("");
   const [waveVisible, setWave]    = useState(true);
+  const [langOpen, setLangOpen]   = useState(false);
 
   /* Refs */
   const pickerRef        = useRef(null);
@@ -32,6 +37,7 @@ export default function NavBar() {
   const hideWaveTimer    = useRef(null);
   const scrollSpyTicking = useRef(false);
   const lastMoves        = useRef([]); // pour momentum
+  const langRef          = useRef(null);
 
   /* Const */
   const ITEMS_COUNT = SECTION_IDS.length;
@@ -132,11 +138,25 @@ export default function NavBar() {
       setOpen(false);
     }, 100);
     
-    // En mode scène, pas de scroll. On met à jour l'URL pour deep-link.
-    if (history?.replaceState) {
-      history.replaceState(null, "", `#${targetId}`);
+    // Si on est sur la home, on reste en mode scène; sinon on navigue vers la page SSR
+    const isHome = pathname === "/" || pathname === "/fr";
+    if (isHome) {
+      if (history?.replaceState) history.replaceState(null, "", `#${targetId}`);
+    } else {
+      const routeById = {
+        accueil: "/",
+        construction: "/construction",
+        renovation: "/renovation",
+        depannage: "/depannage",
+        hivernage: "/hivernage",
+        entretien: "/entretien",
+        terrasses: "/terrasses",
+        "nos-realisations": "/nos-realisations",
+        contact: "/contact",
+      };
+      router.push(routeById[targetId] || "/");
     }
-  }, []);
+  }, [pathname, router]);
   const handleClickLooped = useCallback((loopedIdx) => {
     selectIndex(mod(loopedIdx, ITEMS_COUNT));
   }, [ITEMS_COUNT, selectIndex]);
@@ -226,11 +246,27 @@ export default function NavBar() {
 
   /* ESC pour fermer */
   useEffect(() => {
-    if (!pickerOpen) return;
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    const onKey = (e) => {
+      if (e.key !== "Escape") return;
+      if (pickerOpen) setOpen(false);
+      if (langOpen) setLangOpen(false);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [pickerOpen]);
+  }, [pickerOpen, langOpen]);
+
+  // Fermer le sélecteur de langue au clic extérieur
+  useEffect(() => {
+    if (!langOpen) return;
+    const onDown = (e) => {
+      if (!langRef.current) return;
+      if (!langRef.current.contains(e.target)) setLangOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [langOpen]);
+
+  // Aucun menu mobile ici: géré par MobileNavBar
 
   // Désactivation du picker mobile : ne rien rendre sur mobile
   const renderPickerClosed = () => null;
@@ -268,7 +304,7 @@ export default function NavBar() {
         }}
       />
       <div
-        className="max-w-7xl mx-auto flex items-center justify-between px-2 md:px-4 py-2 relative z-10 overflow-hidden"
+  className="max-w-7xl mx-auto flex items-center justify-between px-2 md:px-4 py-2 relative z-10 overflow-visible"
         style={{ maxWidth: '100vw', boxSizing: 'border-box' }}
       >
         {/* Logo */}
@@ -281,7 +317,7 @@ export default function NavBar() {
           <span className="leading-none font-semibold text-[10px] md:text-xs tracking-[0.06em]">GROUP</span>
         </a>
 
-        {/* Desktop menu */}
+  {/* Desktop menu */}
         <div className="relative z-10 hidden lg:flex flex-1 justify-center max-w-0 lg:max-w-none overflow-hidden">
           <ul className="flex gap-2 lg:gap-5 xl:gap-7 items-center font-nunito font-bold text-[#1567db] flex-wrap justify-center">
             {SECTION_IDS.map((item) => {
@@ -325,19 +361,49 @@ export default function NavBar() {
             })}
           </ul>
         </div>
-        {/* Lang switcher */}
-        <div className="relative z-10 flex items-center gap-1 ml-2">
-          {(["fr","nl","en"]).map(code => (
-            <button
-              key={code}
-              className={`px-2 py-1 rounded text-xs font-semibold border transition-colors ${lang===code?"bg-[#009ee0] text-white border-[#009ee0]":"bg-white/70 text-[#1567db] border-[#cfe8fb] hover:bg-white"}`}
-              onClick={() => setLang(code)}
-              aria-pressed={lang===code}
-              title={t(`lang.${code}`)}
-            >
-              {code.toUpperCase()}
-            </button>
-          ))}
+    {/* Sélecteur de langue (côté opposé du logo, visible mobile & desktop) */}
+    <div className="relative z-10 ml-2" ref={langRef}>
+          <button
+            type="button"
+      className="px-2 py-1 rounded text-xs font-semibold bg-white/80 text-[#1567db] hover:bg-white flex items-center gap-1"
+            aria-haspopup="listbox"
+            aria-expanded={langOpen}
+            onClick={() => setLangOpen((v) => !v)}
+            title={t(`lang.${lang}`)}
+            aria-label={t(`lang.${lang}`)}
+          >
+            <img src={FLAG_SRC[lang]} alt="" aria-hidden width="16" height="12" className="w-4 h-3 object-cover rounded-sm" />
+            <span aria-hidden>▾</span>
+          </button>
+      <AnimatePresence>
+            {langOpen && (
+        <m.ul
+                role="listbox"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                className="absolute right-0 mt-2 w-40 bg-white/95 backdrop-blur-sm border border-[#cfe8fb] rounded-md shadow-lg overflow-hidden"
+              >
+                {["fr","nl","en"].map((code) => (
+                  <li
+                    key={code}
+                    role="option"
+                    aria-selected={lang === code}
+                    tabIndex={0}
+                    className={`px-3 py-2 text-sm cursor-pointer flex items-center justify-between ${lang===code?"bg-[#e6f6ff] text-[#009ee0]":"text-[#1567db] hover:bg-[#f5fbff]"}`}
+                    onClick={() => { setLang(code); setLangOpen(false); }}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(code); setLangOpen(false); } }}
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <img src={FLAG_SRC[code]} alt="" aria-hidden width="16" height="12" className="w-4 h-3 object-cover rounded-sm" />
+                      <span className="font-semibold">{t(`lang.${code}`)}</span>
+                    </span>
+                    {lang === code && <span aria-hidden className="text-[#009ee0]">✓</span>}
+                  </li>
+                ))}
+              </m.ul>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </nav>

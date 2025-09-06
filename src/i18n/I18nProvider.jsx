@@ -1,5 +1,8 @@
 "use client";
 import { createContext, useContext, useMemo, useState, useEffect } from "react";
+import fr from "./messages/fr.json";
+import en from "./messages/en.json";
+import nl from "./messages/nl.json";
 
 const DEFAULT_LANG = "fr"; // fr | nl | en
 const SUPPORTED = ["fr", "nl", "en"];
@@ -66,15 +69,10 @@ export function I18nProvider({ children, initialLang }) {
     }
   };
 
-  // Lazy load messages (simple sync import for now)
+  // Dictionnaires importés statiquement (plus robustes avec Turbopack)
   const messages = useMemo(() => {
-    try {
-      // eslint-disable-next-line global-require, import/no-dynamic-require
-      const dict = require(`./messages/${lang}.json`);
-      return dict || {};
-    } catch (e) {
-      return {};
-    }
+    const DICTS = { fr, en, nl };
+    return DICTS[lang] || {};
   }, [lang]);
 
   const t = (key) => {

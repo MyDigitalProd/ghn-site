@@ -1,8 +1,8 @@
 "use client"; // Exécute ce composant côté client (animations, hooks React)
 
 import { useId } from "react"; // Génère un identifiant unique pour éviter les collisions d'IDs SVG
-import WaterParticles from "./WaterParticles"; // Import du composant de particules
-import StagnantWaterRipple from "./StagnantWaterRipple"; // Import des ondulations
+import WaterParticles from "./WaterParticles"; // Particules décoratives (optionnelles)
+import StagnantWaterRipple from "./StagnantWaterRipple"; // Ondulations (optionnelles)
 
 // Composant de vague décorative placé "en overlay" dans une section avec effet de profondeur
 export default function WaveBackground({ 
@@ -134,6 +134,11 @@ export default function WaveBackground({
           50% { transform: translateX(8px) rotateZ(-0.2deg) scale(0.99); }
           75% { transform: translateX(-25px) rotateZ(0.4deg) scale(1.02); }
           100% { transform: translateX(0) rotateZ(0deg) scale(1); }
+        }
+
+        /* Respecter la préférence de réduction de mouvement */
+        @media (prefers-reduced-motion: reduce) {
+          .wave-anim1, .wave-anim2, .wave-anim3 { animation: none !important; transform: none !important; }
         }
       `}</style>
 

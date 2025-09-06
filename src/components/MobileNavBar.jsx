@@ -1,24 +1,29 @@
 
 "use client";
-import { useState, useRef, useEffect } from "react";
-import { useCallback } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { usePathname, useRouter } from "next/navigation";
+// Removed react-icons
+// import { FaBars, FaTimes } from "react-icons/fa";
 import { useSection } from "./SectionProvider";
+import { useI18n } from "@/i18n/I18nProvider";
 
 const SECTIONS = [
-  { id: "accueil", label: "Accueil" },
-  { id: "construction", label: "Construction" },
-  { id: "renovation", label: "Rénovation" },
-  { id: "depannage", label: "Dépannage" },
-  { id: "hivernage", label: "Hivernage" },
-  { id: "entretien", label: "Entretien" },
-  { id: "terrasses", label: "Terrasses" },
-  { id: "nos-realisations", label: "Nos Réalisations" },
-  { id: "contact", label: "Contact" },
+  { id: "accueil" },
+  { id: "construction" },
+  { id: "renovation" },
+  { id: "depannage" },
+  { id: "hivernage" },
+  { id: "entretien" },
+  { id: "terrasses" },
+  { id: "nos-realisations" },
+  { id: "contact" },
 ];
 
 export default function MobileNavBar() {
   const { active: ctxActive, setActive: setCtxActive } = useSection();
+  const { t } = useI18n();
+  const router = useRouter();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("accueil");
   const [hovered, setHovered] = useState("");
@@ -57,18 +62,36 @@ export default function MobileNavBar() {
     setOpen(false);
     setActive(id);
     setCtxActive(id);
-    if (history?.replaceState) history.replaceState(null, "", `#${id}`);
+    const isHome = pathname === "/" || pathname === "/fr";
+    if (isHome) {
+      if (history?.replaceState) history.replaceState(null, "", `#${id}`);
+    } else {
+      const routeById = {
+        accueil: "/",
+        construction: "/construction",
+        renovation: "/renovation",
+        depannage: "/depannage",
+        hivernage: "/hivernage",
+        entretien: "/entretien",
+        terrasses: "/terrasses",
+        "nos-realisations": "/nos-realisations",
+        contact: "/contact",
+      };
+      router.push(routeById[id] || "/");
+    }
   };
 
   return (
   <>
       {/* Hamburger button */}
       <button
-        className="fixed top-4 right-4 z-[100] p-3 rounded-full bg-white/90 shadow-lg backdrop-blur-md border border-sky-100 lg:hidden"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] p-3 rounded-full bg-white/90 shadow-lg backdrop-blur-md border border-sky-100 lg:hidden"
         aria-label="Ouvrir le menu"
         onClick={() => setOpen(true)}
       >
-        <FaBars className="text-2xl text-sky-600" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" aria-hidden>
+            <path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z" />
+          </svg>
       </button>
 
       {/* Overlay + Fullscreen menu */}
@@ -94,10 +117,12 @@ export default function MobileNavBar() {
               aria-label="Fermer le menu"
               onClick={() => setOpen(false)}
             >
-              <FaTimes className="text-2xl text-sky-600" />
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-5 h-5" aria-hidden>
+                  <path fill="currentColor" d="M18.3 5.71 12 12.01l-6.29-6.3-1.42 1.42 6.3 6.29-6.3 6.29 1.42 1.42L12 14.83l6.29 6.3 1.42-1.42-6.3-6.29 6.3-6.29z" />
+                </svg>
             </button>
             <ul className="flex flex-col gap-5 w-full max-w-xs text-center mt-8">
-              {SECTIONS.map((s) => (
+      {SECTIONS.map((s) => (
                 <li key={s.id} className="relative nav-link"
                   onMouseEnter={() => setHovered(s.id)}
                   onMouseLeave={() => setHovered("")}
@@ -109,7 +134,7 @@ export default function MobileNavBar() {
                     style={{ position: 'relative', zIndex: 2 }}
                     onClick={() => handleNav(s.id)}
                   >
-                    {s.label}
+        {t(`nav.${s.id}`)}
                   </button>
                   {/* Vague animée sous l'item actif ou légère au hover */}
                   {(active === s.id || hovered === s.id) && (
@@ -176,7 +201,7 @@ export default function MobileNavBar() {
             opacity: 1 !important;
           }
         }
-      `}</style>
+  `}</style>
     </>
   );
 }
