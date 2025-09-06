@@ -4,11 +4,31 @@ import { createPortal } from "react-dom";
 export default function InfoModal({ open, onClose, title, icon, children }) {
   const [closing, setClosing] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
+  const dialogRef = React.useRef(null);
+  const openerRef = React.useRef(null);
   
   // S'assurer que le composant est monté côté client
   React.useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Mémoriser l'élément actif à l'ouverture pour retour focus
+  React.useEffect(() => {
+    if (open) {
+      openerRef.current = document.activeElement;
+      // focus premier élément focusable ou la boîte
+      setTimeout(() => {
+        const root = dialogRef.current;
+        if (!root) return;
+        const focusable = root.querySelector(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        (focusable || root).focus();
+      }, 0);
+    } else if (openerRef.current && openerRef.current.focus) {
+      openerRef.current.focus();
+    }
+  }, [open]);
   
   // Bloquer le scroll quand le modal est ouvert
   React.useEffect(() => {
@@ -37,6 +57,33 @@ export default function InfoModal({ open, onClose, title, icon, children }) {
       onClose();
     }, 320);
   };
+
+  // Fermer via ESC et piéger le focus dans le modal
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.stopPropagation(); handleClose(); }
+      if (e.key === 'Tab') {
+        const root = dialogRef.current;
+        if (!root) return;
+        const focusables = root.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 
   const modalContent = (
     <div 
@@ -70,12 +117,16 @@ export default function InfoModal({ open, onClose, title, icon, children }) {
       />
       
       {/* Container du modal centré */}
-      <div className="relative flex items-center justify-center min-h-screen p-4" style={{zIndex: 1}}>
+    <div className="relative flex items-center justify-center min-h-screen p-4" style={{zIndex: 1}}>
         <div
-          className={`bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-10 relative ${closing ? 'modalOut' : 'modalIn'}`}
+      className={`bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-10 relative ${closing ? 'modalOut' : 'modalIn'}`}
           style={{
             animation: `${closing ? 'modalOut' : 'modalIn'} 0.4s cubic-bezier(.44,.95,.6,1.15) both`,
           }}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      ref={dialogRef}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Bouton de fermeture stylé */}
@@ -88,7 +139,7 @@ export default function InfoModal({ open, onClose, title, icon, children }) {
           </button>
           
           {/* Titre avec icône pour cohérence visuelle */}
-          <h2 className="text-3xl font-bold mb-8 text-center leading-tight flex items-center justify-center gap-4 pt-2">
+          <h2 id="modal-title" className="text-3xl font-bold mb-8 text-center leading-tight flex items-center justify-center gap-4 pt-2">
             {icon && <span className="text-4xl">{icon}</span>}
             <span>{title}</span>
           </h2>

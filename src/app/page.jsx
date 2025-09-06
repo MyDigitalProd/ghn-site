@@ -2,6 +2,7 @@
 
 // ----- Imports React & icônes -----
 import React, { useEffect, useRef, useState, useMemo } from "react"; // Hooks React
+import Image from "next/image";
 import {
   FaDraftingCompass, FaCogs, FaGem, FaTools, FaRedo, FaWrench, FaSnowflake,
   FaLeaf, FaShieldAlt, FaWater, FaCheckCircle, FaHammer, FaPhoneAlt, FaEnvelope, FaUser,
@@ -77,7 +78,14 @@ export default function Page() {
                     </ul>
                   </div>
                   <div className="flex items-center justify-center w-full max-w-full">
-                    <img src="/img/logo adam fini (2).png" alt="Logo GHN Group - Piscines & Extérieurs" className="w-full h-auto max-w-full max-h-full object-contain p-4" />
+                    <Image
+                      src="/img/logo adam fini (2).png"
+                      alt="Logo GHN Group - Piscines & Extérieurs"
+                      width={800}
+                      height={400}
+                      priority
+                      className="w-full h-auto max-w-full max-h-full object-contain p-4"
+                    />
                   </div>
                 </div>
               </motion.section>

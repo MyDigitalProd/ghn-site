@@ -1,9 +1,18 @@
 import nodemailer from "nodemailer";
 
+// Force Node.js runtime (nodemailer n'est pas compatible edge)
+export const runtime = "nodejs";
+
 export async function POST(req) {
   try {
-    const { name, email, message } = await req.json();
-    if (!name || !email || !message) {
+  const { name, email, message } = await req.json();
+  // Validation basique
+  const safeStr = (v) => (typeof v === "string" ? v.trim() : "");
+  const n = safeStr(name);
+  const e = safeStr(email);
+  const m = safeStr(message);
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!n || !e || !m || n.length > 200 || e.length > 200 || m.length > 5000 || !emailRe.test(e)) {
       return new Response(JSON.stringify({ error: "Champs requis manquants." }), { status: 400 });
     }
 
@@ -18,14 +27,22 @@ export async function POST(req) {
       },
     });
 
+    // Petite fonction d'échappement HTML pour le corps
+    const escapeHtml = (s) => s
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/\"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+
     // Email à envoyer
     await transporter.sendMail({
       from: `Contact GHN <${process.env.SMTP_USER}>`,
       to: process.env.ADMIN_EMAIL, // Adresse de l'admin
-      subject: `Nouveau message de ${name}`,
-      replyTo: email,
-      text: message,
-      html: `<p><b>Nom:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Message:</b><br/>${message}</p>`
+      subject: `Nouveau message de ${n}`,
+      replyTo: e,
+      text: m,
+      html: `<p><b>Nom:</b> ${escapeHtml(n)}</p><p><b>Email:</b> ${escapeHtml(e)}</p><p><b>Message:</b><br/>${escapeHtml(m).replace(/\n/g, "<br/>")}</p>`
     });
 
     return new Response(JSON.stringify({ success: true }), { status: 200 });

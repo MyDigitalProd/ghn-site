@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /api/
-Disallow: /fonts/
-Disallow: /img/
+
+# Allow images and fonts to be crawled and indexed for better SEO
+# If you need to protect specific private assets, disallow them explicitly by path.
