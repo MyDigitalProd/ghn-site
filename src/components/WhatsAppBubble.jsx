@@ -1,42 +1,59 @@
-"use client";
-import { useState, useEffect } from "react";
-import { m, AnimatePresence } from "framer-motion";
-import { useSection } from "./SectionProvider";
-import { useI18n } from "@/i18n/I18nProvider";
+"use client"; // Composant client (hooks autorisés)
+
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, m } from "framer-motion";
 import { WHATSAPP_PHONE } from "@/config/site";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function WhatsAppBubble({ hideOnContact = false }) {
-  const { active } = useSection();
-  const { t } = useI18n();
-  const [isContactVisible, setIsContactVisible] = useState(false);
-  const message = encodeURIComponent(t("bubble.defaultMessage") || "");
-  const url = `https://wa.me/${WHATSAPP_PHONE}?text=${message}`;
-
+export default function WhatsAppBubble() {
+  // Example WhatsApp-style messages
+  const messages = [
+    "Salut ! Besoin d'aide ?",
+    "Envoyez-nous un message sur WhatsApp !",
+    "Nous sommes là pour vous répondre.",
+    "Posez votre question ici !"
+  ];
+  const [msgIndex, setMsgIndex] = useState(0);
   useEffect(() => {
-    // Mode scène: masquer si section active = contact
-    setIsContactVisible(active === "contact");
-  }, [active]);
+    const timer = setInterval(() => {
+      setMsgIndex((i) => (i + 1) % messages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+  const waUrl = `https://wa.me/${WHATSAPP_PHONE}`;
 
   return (
-  <AnimatePresence mode="wait">
-      {!(hideOnContact && isContactVisible) && (
-    <m.a
-          key="whatsapp-bubble"
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={t("bubble.aria") || "WhatsApp"}
-          className="fixed bottom-5 right-5 z-[120] bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center p-4 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-400"
-          style={{ boxShadow: "0 4px 24px #22c55e55" }}
-          initial={{ scale: 0.7, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1, transition: { type: 'spring', stiffness: 400, damping: 20 } }}
-          exit={{ scale: 0.7, opacity: 0, transition: { type: 'tween', duration: 0.3 } }}
+    <div className="fixed bottom-5 right-5 z-[120] flex flex-col items-end">
+      {/* Comic-style WhatsApp message bubble */}
+      <AnimatePresence>
+        <m.div
+          key={msgIndex}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.5 }}
+          className="relative mb-2 max-w-[220px] bg-[#e7ffdb] text-[#075e54] text-sm shadow-lg rounded-2xl px-4 py-2 border border-[#b2f5ea]"
+          style={{ fontFamily: 'Segoe UI, Arial, sans-serif' }}
         >
-          <FaWhatsapp className="w-7 h-7" aria-hidden />
-          <span className="ml-2 font-bold hidden sm:inline">{t("bubble.cta") || "WhatsApp"}</span>
-  </m.a>
-      )}
-    </AnimatePresence>
+          <span>{messages[msgIndex]}</span>
+          {/* WhatsApp-style tail */}
+          <span
+            aria-hidden
+            className="absolute -bottom-2 right-6 inline-block w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-[#e7ffdb]"
+          />
+        </m.div>
+      </AnimatePresence>
+      {/* WhatsApp logo button only */}
+      <a
+        href={waUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Ouvrir WhatsApp"
+        className="bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg flex items-center justify-center p-4 focus:outline-none focus:ring-2 focus:ring-green-400"
+        style={{ boxShadow: "0 4px 24px #22c55e55" }}
+      >
+        <FaWhatsapp className="w-7 h-7" aria-hidden />
+      </a>
+    </div>
   );
 }

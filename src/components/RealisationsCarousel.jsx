@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { LazyMotion, domAnimation, m, AnimatePresence } from "framer-motion";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const categories = [
   { id: "all", label: "Toutes", color: "bg-gradient-to-r from-sky-500 to-cyan-500" },
@@ -112,94 +112,106 @@ export default function RealisationsCarousel() {
 
   return (
     <LazyMotion features={domAnimation} strict>
-    <div className="w-full max-w-5xl mx-auto px-2">
-      {/* Filtres */}
-      <div className="flex flex-wrap justify-center gap-3 mb-4">
-        {categories.map((c) => (
-          <m.button
-            key={c.id}
-            onClick={() => { setSelectedCategory(c.id); setCurrentIndex(0); }}
-            className={`px-4 py-2 rounded-full text-white font-medium transition-all duration-300 ${selectedCategory === c.id ? `${c.color} scale-105 shadow-lg` : "bg-gray-400 hover:bg-gray-500"}`}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            {c.label}
-          </m.button>
-        ))}
-      </div>
-
-      {/* Carousel */}
-      <div className="group relative overflow-hidden rounded-2xl bg-transparent">
-        <div className="relative h-[36vh] md:h-[44vh] lg:h-[48vh] min-h-[260px] max-h-[520px]">
-          <AnimatePresence mode="wait">
-            <m.div
-              key={`${selectedCategory}-${currentIndex}`}
-              initial={{ opacity: 0, x: 200 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -200 }}
-              transition={{ duration: 0.45, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
-              <div className="relative h-full flex items-center justify-center">
-                {images.length > 0 ? (
-                  <div className="relative w-[90%] h-[88%]">
-                    <Image
+      <div className="w-full max-w-5xl mx-auto px-2">
+        {/* Filtres */}
+        <div className="flex flex-wrap justify-center gap-6 mb-4">
+          {categories.map((c) => {
+            const isActive = selectedCategory === c.id;
+            return (
+              <div key={c.id} className="relative flex flex-col items-center">
+                <m.button
+                  onClick={() => { setSelectedCategory(c.id); setCurrentIndex(0); }}
+                  className={`px-4 py-2 text-base font-semibold rounded-full transition-colors duration-300 ${isActive ? "text-sky-600" : "text-gray-500 hover:text-sky-500"}`}
+                  style={{ background: "transparent", boxShadow: "none" }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  aria-current={isActive ? "true" : "false"}
+                >
+                  {c.label}
+                </m.button>
+                {/* Vague bleue SVG sous le bouton actif */}
+                <div
+                  className="absolute -bottom-[0.2rem] left-1/2 -translate-x-1/2 pointer-events-none"
+                  aria-hidden="true"
+                  style={{ width: 80, height: 10 }}
+                >
+                  <svg width="80" height="10" viewBox="0 0 64 10" fill="none" style={{ display: "block" }}>
+                    <path
+                      d="M0 5 Q 16 10 32 5 Q 48 0 64 5"
+                      fill="none"
+                      stroke={isActive ? "#0ea5e9" : "currentColor"}
+                      strokeWidth={isActive ? 2.2 : 1.2}
+                      opacity={isActive ? 1 : 0.28}
+                    />
+                  </svg>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {/* Carousel */}
+        <div className="group relative overflow-hidden rounded-2xl bg-transparent">
+          <div className="relative h-[36vh] md:h-[44vh] lg:h-[48vh] min-h-[260px] max-h-[520px]">
+            <AnimatePresence mode="wait">
+              <m.div
+                key={`${selectedCategory}-${currentIndex}`}
+                initial={{ opacity: 0, x: 200 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -200 }}
+                transition={{ duration: 0.45, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <div className="relative h-full flex items-center justify-center">
+                  {images.length > 0 ? (
+                    <img
                       src={images[currentIndex]}
                       alt={`Réalisation ${currentIndex + 1}`}
-                      fill
-                      sizes="(max-width: 768px) 90vw, (max-width: 1200px) 70vw, 800px"
-                      className="object-contain rounded-2xl shadow-xl shadow-sky-300/50 will-change-transform img-float transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01]"
-                      priority={false}
+                      className="max-w-[90%] max-h-[88%] object-contain rounded-2xl shadow-xl shadow-sky-300/50 will-change-transform img-float transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-[1.01]"
+                      loading="lazy"
                     />
-                  </div>
-                ) : (
-                  <div className="text-gray-600">Aucune image</div>
-                )}
-              </div>
+                  ) : (
+                    <div className="text-gray-600">Aucune image</div>
+                  )}
+                </div>
               </m.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Contrôles */}
-        {images.length > 1 && (
-          <>
-            <button onClick={goToPrev} aria-label="Précédent" className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
-                <path fill="currentColor" d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-              </svg>
-            </button>
-            <button onClick={goToNext} aria-label="Suivant" className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4" aria-hidden>
-                <path fill="currentColor" d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z" />
-              </svg>
-            </button>
-          </>
-        )}
-
-        {/* Dots */}
-        {images.length > 1 && (
-          <div className="flex items-center justify-center gap-2 py-3">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goToSlide(i)}
-                className={`h-2 rounded-full transition-all ${i === currentIndex ? "bg-sky-500 w-6" : "bg-gray-400 w-2"}`}
-                aria-label={`Aller à l'image ${i + 1}`}
-              />
-            ))}
+            </AnimatePresence>
           </div>
-        )}
+          {/* Contrôles */}
+          {images.length > 1 && (
+            <>
+              <button onClick={goToPrev} aria-label="Précédent" className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
+                <FaChevronLeft />
+              </button>
+              <button onClick={goToNext} aria-label="Suivant" className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-sky-700 p-2 rounded-full shadow">
+                <FaChevronRight />
+              </button>
+            </>
+          )}
+
+          {/* Dots */}
+          {images.length > 1 && (
+            <div className="flex items-center justify-center gap-2 py-3">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  className={`h-2 rounded-full transition-all ${i === currentIndex ? "bg-sky-500 w-6" : "bg-gray-400 w-2"}`}
+                  aria-label={`Aller à l'image ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        {/* Animation flottante locale au composant */}
+        <style jsx>{`
+          @keyframes floatImg {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.01); }
+            100% { transform: translateY(0) scale(1); }
+          }
+          .img-float { animation: floatImg 6s ease-in-out infinite; }
+        `}</style>
       </div>
-      {/* Animation flottante locale au composant */}
-  <style jsx>{`
-        @keyframes floatImg {
-          0% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-6px) scale(1.01); }
-          100% { transform: translateY(0) scale(1); }
-        }
-        .img-float { animation: floatImg 6s ease-in-out infinite; }
-      `}</style>
-  </div>
-  </LazyMotion>
+    </LazyMotion>
   );
 }

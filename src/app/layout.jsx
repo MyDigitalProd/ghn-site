@@ -28,13 +28,15 @@ export default function RootLayout({ children }) {
           <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-50 to-blue-50" />
           <div className="absolute top-0 inset-x-0 h-[90px]">
             <RealisticWaveEffect
-              height={90}
-              amplitude={10}
-              frequency={0.007}
-              speed={0.015}
+              height={110}
+              amplitude={11}
+              frequency={0.009}
+              speed={0.015
+
+              }
               color="#009ee0"
-              opacity={0.4}
-              layers={4}
+              opacity={0.9}
+              layers={8}
             />
           </div>
         </div>

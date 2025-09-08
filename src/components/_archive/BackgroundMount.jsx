@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 // Lazy-load an existing lightweight background to cut initial JS cost
-const WaveBackground = dynamic(() => import("@/components/WaveBackground"), { ssr: false });
+const WaveBackground = dynamic(() => import("@/components/_archive/WaveBackground"), { ssr: false });
 
 export default function BackgroundMount() {
   const [ready, setReady] = useState(false);
