@@ -3,7 +3,20 @@
 // Composant Footer, affiché en bas de toutes les pages
 export default function Footer() {
   return (
-    <footer>
+    <footer style={{ position: 'relative' }}>
+      {/* Flèche pour réduire le footer */}
+      <button
+        type="button"
+        aria-label="Réduire le footer"
+        title="Réduire le footer"
+        className="absolute left-1/2 -translate-x-1/2 -top-5 bg-white/80 rounded-full shadow p-1 z-10 hover:bg-sky-100 transition-colors"
+        onClick={() => document.dispatchEvent(new CustomEvent('hideFooter'))}
+        style={{ cursor: 'pointer' }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M6 9l6 6 6-6" stroke="#0ea5e9" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
       {/* Bloc 1 : Copyright avec l'année en cours */}
       <p>© 2021–{new Date().getFullYear()}</p>
       {/* Bloc 2 : Nom du site */}

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useI18n } from "@/i18n/I18nProvider";
+import { FaWhatsapp } from "react-icons/fa";
 import { WHATSAPP_PHONE } from "@/config/site";
 
 export default function InteractiveContact() {
@@ -48,7 +49,7 @@ export default function InteractiveContact() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 w-full max-w-2xl mx-auto min-h-screen py-8">
+    <div className="flex flex-col items-center justify-center gap-8 w-full max-w-2xl mx-auto h-full py-4">
       {/* Texte toujours visible au-dessus */}
       <div className="text-center space-y-4 w-full">
         <h2 className="text-2xl md:text-4xl font-semibold flex items-center justify-center gap-3">
@@ -61,8 +62,8 @@ export default function InteractiveContact() {
       </div>
 
       {/* Zone interactive (WhatsApp ou Email) */}
-      {mode === 'whatsapp' ? (
-  <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 w-full max-w-lg mx-auto flex flex-col items-center gap-6 animate-scale-in max-h-[80vh] overflow-y-auto">
+    {mode === 'whatsapp' ? (
+  <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 w-full max-w-lg mx-auto flex flex-col items-center gap-6 animate-scale-in max-h-[80vh] overflow-y-auto">
           <div className="text-center">
             <h3 className="text-xl font-bold text-sky-700 mb-2">{t('contact.whatsapp.title') || 'WhatsApp'}</h3>
             <p className="text-gray-600">{t('contact.whatsapp.subtitle') || ''}</p>
@@ -80,9 +81,7 @@ export default function InteractiveContact() {
             className="bg-green-500 hover:bg-green-600 text-white rounded-2xl px-8 py-4 flex items-center gap-3 text-lg font-bold shadow-lg transition-all duration-200"
             aria-label={t('contact.whatsapp.aria') || 'Ouvrir WhatsApp'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-5 h-5" aria-hidden>
-              <path fill="currentColor" d="M16 3C9.383 3 4 8.383 4 15a11.9 11.9 0 0 0 1.627 6.036L4 29l8.227-1.585A12.93 12.93 0 0 0 16 27c6.617 0 12-5.383 12-12S22.617 3 16 3z" />
-            </svg>
+            <FaWhatsapp className="w-7 h-7" aria-hidden />
             {t('contact.whatsapp.cta') || 'Démarrer la discussion'}
           </a>
           <button
@@ -96,8 +95,8 @@ export default function InteractiveContact() {
             {t('contact.toEmail.text') || 'Préférez-vous envoyer un email ?'}
           </button>
         </div>
-      ) : (
-  <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-8 w-full max-w-lg mx-auto flex flex-col items-center gap-6 animate-scale-in max-h-[80vh] overflow-y-auto">
+    ) : (
+  <div className="bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl p-6 w-full max-w-lg mx-auto flex flex-col items-center gap-6 animate-scale-in max-h-[80vh] overflow-y-auto">
           <div className="text-center">
             <h3 className="text-xl font-bold text-sky-700 mb-2">{t('contact.email.title') || 'Email'}</h3>
             <p className="text-gray-600">{t('contact.email.subtitle') || ''}</p>
@@ -147,8 +146,9 @@ export default function InteractiveContact() {
             className="bg-green-500 hover:bg-green-600 text-white rounded-xl px-6 py-3 flex items-center gap-2 font-bold shadow-md transition-all duration-200"
             aria-label={t('contact.toWhatsApp.aria') || 'Basculer vers WhatsApp'}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-4 h-4" aria-hidden>
-              <path fill="currentColor" d="M16 3C9.383 3 4 8.383 4 15a11.9 11.9 0 0 0 1.627 6.036L4 29l8.227-1.585A12.93 12.93 0 0 0 16 27c6.617 0 12-5.383 12-12S22.617 3 16 3z" />
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" className="w-4 h-4" aria-hidden>{""}
+              <path fill="#25D366" d="M16 3C9.383 3 4 8.383 4 15a11.9 11.9 0 0 0 1.627 6.036L4 29l8.227-1.585A12.93 12.93 0 0 0 16 27c6.617 0 12-5.383 12-12S22.617 3 16 3z" />
+              <path fill="#FFF" d="M22.163 19.197c-.304-.152-1.797-.887-2.075-.988-.278-.102-.48-.152-.682.152-.203.304-.782.988-.96 1.191-.177.203-.355.228-.659.076-.304-.152-1.284-.473-2.447-1.509-.904-.805-1.515-1.799-1.694-2.103-.178-.304-.019-.468.134-.62.137-.136.304-.355.456-.533.152-.178.203-.304.304-.507.101-.203.051-.38-.025-.533-.076-.152-.682-1.646-.934-2.253-.246-.591-.497-.511-.682-.52-.177-.008-.38-.01-.583-.01-.203 0-.533.076-.812.38-.278.304-1.066 1.043-1.066 2.543 0 1.5 1.092 2.953 1.244 3.157.152.203 2.149 3.285 5.215 4.473.729.252 1.297.403 1.74.515.73.185 1.394.159 1.918.097.585-.07 1.797-.734 2.052-1.444.254-.711.254-1.322.178-1.444-.076-.122-.278-.195-.583-.347z" />
             </svg>
             {t('contact.toWhatsApp.text') || 'Revenir à WhatsApp'}
           </button>
