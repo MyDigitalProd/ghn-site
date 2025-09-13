@@ -14,6 +14,10 @@
   "lang.nl": "Nederlands",
   "lang.en": "English"
   ,
+  "whatsapp.bubble.0": "Hallo! Hulp nodig?",
+  "whatsapp.bubble.1": "Stuur ons een bericht op WhatsApp!",
+  "whatsapp.bubble.2": "We staan klaar om te antwoorden.",
+  "whatsapp.bubble.3": "Stel hier je vraag!",
   "hero.title": "GHN Group – Zwembaden & Uitzonderlijke Buitenruimtes",
   "hero.lead": "Stel je het ideale zwembad voor, perfect geïntegreerd in je tuin. Maatwerkprojecten van familiezwembad tot lap pool en spiegelbad.",
   "hero.bullets.0": "Haalbaarheidsonderzoek ter plaatse",
@@ -144,5 +148,7 @@
   "contact.email.cta": "Versturen",
   "contact.email.cta.aria": "Stuur het bericht naar de beheerder",
   "contact.email.sending": "Verzenden...",
-  "contact.email.sent": "Bericht verzonden! We nemen snel contact met u op."
+  "contact.email.sent": "Bericht verzonden! We nemen snel contact met u op.",
+  "ui.hint.inline": "Klik op een kaart voor details.",
+  "ui.hint.clickCard": "Klik voor meer info"
 }

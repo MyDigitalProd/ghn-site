@@ -17,6 +17,10 @@
   "bubble.aria": "Contact us on WhatsApp",
   "bubble.cta": "WhatsApp quote",
   "bubble.defaultMessage": "Hello, I'd like a quote for a pool!",
+  "whatsapp.bubble.0": "Hi! Need help?",
+  "whatsapp.bubble.1": "Send us a message on WhatsApp!",
+  "whatsapp.bubble.2": "We're here to answer you.",
+  "whatsapp.bubble.3": "Ask your question here!",
   "contact.title": "Contact",
   "contact.subtitle": "Tell us about your pool, renovation or decking project. We'll get back to you quickly with a tailored solution.",
   "contact.whatsapp.title": "Contact us directly on WhatsApp",
@@ -144,5 +148,7 @@
   "terrasses.modal.conception": "Designing and building decking transforms your poolside into a true living space. We create custom decks that match your basin and environment, combining aesthetics and function.",
   "terrasses.modal.materiaux": "We work with premium materials: exotic wood, composite, natural stone, anti-slip tiles. Each is chosen for durability and looks.",
   "terrasses.modal.amenagement": "Landscaping harmoniously integrates your deck. We design green areas, ambient lighting and shade solutions for a unique atmosphere.",
-  "terrasses.modal.entretien": "Care and renovation restore the shine and longevity of existing decks. We handle cleaning, repair, treatment and protection for all surfaces."
+  "terrasses.modal.entretien": "Care and renovation restore the shine and longevity of existing decks. We handle cleaning, repair, treatment and protection for all surfaces.",
+  "ui.hint.inline": "Click a card for details.",
+  "ui.hint.clickCard": "Click a card for details."
 }

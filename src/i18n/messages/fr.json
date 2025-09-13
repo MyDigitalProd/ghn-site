@@ -17,6 +17,10 @@
   "bubble.aria": "Contactez-nous sur WhatsApp",
   "bubble.cta": "Devis WhatsApp",
   "bubble.defaultMessage": "Bonjour, je souhaite un devis pour une piscine !",
+  "whatsapp.bubble.0": "Salut ! Besoin d'aide ?",
+  "whatsapp.bubble.1": "Envoyez-nous un message sur WhatsApp !",
+  "whatsapp.bubble.2": "Nous sommes là pour vous répondre.",
+  "whatsapp.bubble.3": "Posez votre question ici !",
   "contact.title": "Contact",
   "contact.subtitle": "Expliquez-nous votre projet de piscine, rénovation ou terrasse. Nous revenons vers vous rapidement avec une solution sur mesure.",
   "contact.whatsapp.title": "Contactez-nous directement sur WhatsApp",
@@ -144,5 +148,7 @@
   "terrasses.modal.conception": "La conception et réalisation de terrasses transforment l'espace autour de votre piscine en véritable lieu de vie. Chez GHN Group, nous créons des terrasses sur mesure qui s'harmonisent parfaitement avec votre bassin et votre environnement, alliant esthétique et fonctionnalité.",
   "terrasses.modal.materiaux": "Nous travaillons avec des matériaux premium : bois exotique, composite, pierre naturelle, carrelage antidérapant. Chaque matériau est sélectionné pour sa durabilité, sa résistance aux intempéries et son aspect esthétique, garantissant un résultat durable et élégant.",
   "terrasses.modal.amenagement": "L'aménagement paysager intègre harmonieusement votre terrasse dans son environnement. Nous concevons des espaces verts, des éclairages d'ambiance et des solutions d'ombrage pour créer une atmosphère unique et relaxante autour de votre piscine.",
-  "terrasses.modal.entretien": "L'entretien et rénovation des terrasses existantes redonnent éclat et longévité à vos espaces extérieurs. Nos équipes interviennent pour le nettoyage, la réparation, le traitement et la protection de tous types de revêtements de terrasse."
+  "terrasses.modal.entretien": "L'entretien et rénovation des terrasses existantes redonnent éclat et longévité à vos espaces extérieurs. Nos équipes interviennent pour le nettoyage, la réparation, le traitement et la protection de tous types de revêtements de terrasse.",
+  "ui.hint.inline": "Cliquez sur une carte pour voir les détails.",
+  "ui.hint.clickCard": "Cliquer pour voir le détail"
 }

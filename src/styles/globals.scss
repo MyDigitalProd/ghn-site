@@ -1,6 +1,13 @@
 /* Import des composants SCSS (doit être avant toute règle) */
 @use "./tools/fonts";
 @use "./components/Footer";
+@media (max-width: 600px) {
+  .renovation-cards article,
+  .renovation-cards .card,
+  .renovation-cards .section-card {
+    padding: 0 !important;
+  }
+}
 
 /* Utilitaire pour la police du logo */
 .font-bebas { font-family: "Bebas", sans-serif; }

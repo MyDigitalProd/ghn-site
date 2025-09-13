@@ -1,79 +1,53 @@
-@use "../tools/variables" as *;
+@use "../tools/variables" as *; // (Optionnel) Import de variables/mixins globaux
 
+/* 
+ * Footer — pas de rognage, rendu lisse, et FONDU pour supprimer toute “limite visible”.
+ */
 footer {
-  /* Mosaic-like pool tiles background */
-  --tile: linear-gradient(135deg, rgba(255,255,255,0.12) 25%, transparent 25%) 0 0/16px 16px,
-          linear-gradient(315deg, rgba(255,255,255,0.12) 25%, transparent 25%) 0 0/16px 16px,
-          linear-gradient(135deg, rgba(255,255,255,0.12) 25%, transparent 25%) 8px 8px/16px 16px,
-          linear-gradient(315deg, rgba(255,255,255,0.12) 25%, transparent 25%) 8px 8px/16px 16px;
-  background:
-    radial-gradient(1200px 80px at 50% -40px, rgba(255,255,255,0.35), rgba(255,255,255,0)) no-repeat,
-    var(--tile),
-    linear-gradient(180deg, $bleu-moyen, $bleu-piscine);
-  color: $blanc;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.9rem 1rem;
-  position: relative;
-  border-top: 1px solid rgba(255,255,255,0.25);
-  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.08) inset;
+  overflow: visible !important;      // Ne jamais couper la vague
+  contain: layout paint;             // Isolation (perf + z-index propres)
+  backface-visibility: hidden;       // Évite les glitchs 3D
+  transform: translateZ(0);          // Hint GPU pour lisser l’anim
+}
 
-  /* Wave-like top edge using pseudo-element */
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -14px 0 auto 0;
-    height: 14px;
-    background: radial-gradient(20px 12px at 10px 100%, rgba(255,255,255,0.6) 40%, transparent 42%) repeat-x;
-    opacity: 0.35;
-    pointer-events: none;
+/* Fondu doux en bord grâce au mask (haut/bas), pour casser toute “limite” du bloc */
+.footer--fade {
+  /* Masque principal (standard) : noir = visible, transparent = masqué */
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,     /* bord haut fondu (évite une “barre”) */
+    rgba(0,0,0,1) 12%,    /* zone pleinement visible */
+    rgba(0,0,0,1) 88%,    /* zone pleinement visible */
+    rgba(0,0,0,0) 100%    /* bord bas fondu (disparaît en douceur) */
+  );
+  mask-mode: match-source;
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+
+  /* Compatibilité WebKit (Safari/iOS) */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 12%,
+    rgba(0,0,0,1) 88%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+}
+
+/* Bouton “Politique de confidentialité” — feedbacks propres et accessibles */
+.footer-conf-btn {
+  transition: background-color 160ms ease, color 160ms ease, text-decoration-color 160ms ease; // Transitions douces
+  &:hover { text-decoration: underline; }      // Survol simple
+  &:focus-visible {                             // Focus clavier accessible
+    outline: 2px solid rgba(255,255,255,0.85); // Liseré visible
+    outline-offset: 2px;                        // Décalage du liseré
+    border-radius: 8px;                         // Cohérent visuellement
   }
+}
 
-  /* Layout: responsive grid */
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.6rem 1rem;
-  align-items: center;
-  justify-items: center;
-
-  @media (min-width: 520px) {
-    grid-template-columns: auto 1fr auto;
-    justify-content: space-between;
-    justify-items: start;
-  }
-
-  p {
-    font-size: 0.92rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.45em;
-    letter-spacing: 0.2px;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.1);
-  }
-
-  /* Center the site name on small screens, middle column on >=520px */
-  p:nth-of-type(2) {
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-  }
-
-  a {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4em;
-    margin-left: 0.3em;
-    font-size: 1.1em;
-    color: $blanc;
-    text-decoration: none;
-    opacity: 0.95;
-    transition: transform 200ms ease, opacity 200ms ease, filter 200ms ease;
-
-    &:hover {
-      transform: translateY(-1px) scale(1.05);
-      opacity: 1;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25));
-    }
-  }
+/* Variable safe-area si utilisée ailleurs */
+:root {
+  --safe-bottom: env(safe-area-inset-bottom, 0px); // Fallback 0 si non iOS
 }

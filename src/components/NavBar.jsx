@@ -415,7 +415,7 @@ export default function NavBar() {
                 initial={{ opacity: 0, y: -4 }} // État initial (fade + slide léger)
                 animate={{ opacity: 1, y: 0 }} // État animé visible
                 exit={{ opacity: 0, y: -4 }} // Sortie (fade + slide)
-                className="absolute right-0 mt-2 w-40 z-50 bg-white/95 backdrop-blur-sm border border-[#cfe8fb] rounded-md shadow-lg overflow-visible pointer-events-auto" // Z-50 (au-dessus de tout), interactions OK
+                className="absolute right-0 mt-2 w-40 z-90 bg-white/95 backdrop-blur-sm border border-[#cfe8fb] rounded-md shadow-lg overflow-visible pointer-events-auto" // Z-90 (au-dessus de tout), interactions OK
               >
                 {["fr", "nl", "en"].map((code) => (
                   <li
